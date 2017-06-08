@@ -5,7 +5,6 @@ from users.models import User
 from django.urls import reverse
 from django.utils.six import python_2_unicode_compatible
 from django.utils.html import strip_tags
-from DjangoUeditor.models import UEditorField
 
 
 @python_2_unicode_compatible

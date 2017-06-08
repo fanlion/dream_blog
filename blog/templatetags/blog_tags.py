@@ -1,5 +1,6 @@
 from django import template
-from django.views.decorators.cache import cache_page
+from django.db.models import Count, DateField, F
+from django.db.models.functions import Trunc
 
 from blog.models import Post, Category, Tag
 from comments.models import Comment
@@ -7,7 +8,6 @@ from comments.models import Comment
 register = template.Library()
 
 
-@cache_page(60 * 30)
 @register.simple_tag
 def get_recent_posts(num=5):
     """
@@ -15,10 +15,9 @@ def get_recent_posts(num=5):
     :param num: 文章数，默认5
     :return: 
     """
-    return Post.objects.all().order_by('-create_time')[:num]
+    return Post.objects.all().order_by('-create_time').filter(is_pub=True)[:6]
 
 
-@cache_page(60 * 30)
 @register.simple_tag
 def archives():
     """
@@ -28,27 +27,25 @@ def archives():
     return Post.objects.dates('create_time', 'month', order='DESC')
 
 
-@cache_page(60 * 30)
 @register.simple_tag
 def get_categories():
     """
     自定义标签,分类模板
     :return: 
     """
-    return Category.objects.all()
+    return Category.objects.annotate(num_posts=Count('post')).filter(num_posts__gt=0)
 
 
-@cache_page(60 * 30)
 @register.simple_tag
 def get_tags():
     """
     自定义标签，获取文章标签列表
     :return: 
     """
-    return Tag.objects.all()
+    # 按post聚集，并指定命名变量num_posts,并且要求只显示数量大于0的标签
+    return Tag.objects.annotate(num_posts=Count('post')).filter(num_posts__gt=0)
 
 
-@cache_page(60 * 30)
 @register.simple_tag
 def get_recommend_article():
     """
@@ -58,7 +55,6 @@ def get_recommend_article():
     return Post.objects.filter(is_recommend=True).filter(is_pub=True).order_by('-create_time')[:6]
 
 
-@cache_page(60 * 30)
 @register.simple_tag
 def get_recent_comments(count=5):
     """
@@ -69,18 +65,11 @@ def get_recent_comments(count=5):
     return comments
 
 
-@cache_page(60 * 30)
 @register.simple_tag
 def get_article_by_id(pk):
-    return Post.objects.get(pk=pk)
-
-
-@cache_page(60 * 30)
-@register.simple_tag
-def get_post_count_by_category(category_id):
     """
-    根据category_id获取该分类文章的条数
-    :param category_id: 
+    根据id获取文章
+    :param pk: 
     :return: 
     """
-    return Post.objects.filter(category_id=category_id).count()
+    return Post.objects.get(pk=pk)

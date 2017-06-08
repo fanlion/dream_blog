@@ -16,30 +16,21 @@
     <link rel="stylesheet" href="{% static 'blog/css/custom.css' %}">
     <link rel="stylesheet" href="{% static 'blog/css/highlights/github.css' %}">
 
-    <!-- 返回顶部小火箭 -->
-    <link rel="stylesheet" href="{% static 'blog/css/top.css' %}">
-
     <!-- js -->
     <script src="{% static 'js/jquery-2.1.3.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jquery.validate.min.js' %}"></script>
     <script src="{% static 'js/jquery.form.js' %}"></script>
     <script src="{% static 'js/jquery.mockjax.js' %}"></script>
-
-
     <script src="{% static 'blog/js/pace.min.js' %}"></script>
     <script src="{% static 'blog/js/modernizr.custom.js' %}"></script>
-
-    <!-- 返回顶部小火箭 -->
-    <script src="{% static 'blog/js/top.js' %}"></script>
 </head>
 
 <body>
+
 <!-- 量子效果 -->
 <div id="particle" style="height: 150px;"></div>
 
-<!-- 返回顶部小火箭 -->
-<a href="#" onclick="gotoTop();return false;" class="totop"></a>
 <div class="container">
     <header id="site-header">
         <div class="row">
@@ -84,44 +75,40 @@
     <div class="container">
         <div class="row">
             <main class="col-md-8">
-                {# ######################## 主体 ################################}
+                {# ######################## 主体 #########################}
                 {% block main %}
                 {% endblock main %}
             </main>
             <aside class="col-md-4">
-                {# ######################## 文章目录 ################################}
+                {# ######################## 文章目录 ######################}
                 {% block toc %}
                 {% endblock toc %}
-                {# ######################## 文章目录 ################################}
+                {# ######################## 文章目录 ######################}
 
-                {########################## 推荐文章 ################################}
+                {########################## 推荐文章 ######################}
                 {% block recommend %}
                 {% endblock %}
 
-                {########################## 最近文章 ################################}
+                {########################## 最近文章 ######################}
                 {% block recent_article %}
                 {% endblock %}
 
-                {########################## 归档 ################################}
+                {########################## 归档 ##########################}
                 {% block archives %}
                 {% endblock %}
 
 
-                {########################## 分类 ################################}
+                {####################### 分类###############################}
                 {% block category %}
                 {% endblock %}
 
-                {########################## 标签云 ################################}
+                {######################## 标签云 ###########################}
                 {% block tag_cloud %}
                 {% endblock %}
 
-                {########################## 最近评论的文章 ################################}
+                {######################## 最近评论的文章 ####################}
                 {% block recent_comment %}
                 {% endblock %}
-
-                {#                <div class="rss">#}
-                {#                    <a href=""><span class="ion-social-rss-outline"></span> RSS 订阅</a>#}
-                {#                </div>#}
             </aside>
         </div>
     </div>
