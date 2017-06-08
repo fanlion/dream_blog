@@ -1,0 +1,164 @@
+{% load staticfiles %}
+{% load blog_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>李繁&nbsp; 的博客</title>
+
+    <!-- meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- css -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="{% static 'blog/css/pace.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/custom.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/highlights/github.css' %}">
+
+    <!-- 返回顶部小火箭 -->
+    <link rel="stylesheet" href="{% static 'blog/css/top.css' %}">
+
+    <!-- js -->
+    <script src="{% static 'js/jquery-2.1.3.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'js/jquery.form.js' %}"></script>
+    <script src="{% static 'js/jquery.mockjax.js' %}"></script>
+
+
+    <script src="{% static 'blog/js/pace.min.js' %}"></script>
+    <script src="{% static 'blog/js/modernizr.custom.js' %}"></script>
+
+    <!-- 返回顶部小火箭 -->
+    <script src="{% static 'blog/js/top.js' %}"></script>
+</head>
+
+<body>
+<!-- 量子效果 -->
+<div id="particle" style="height: 150px;"></div>
+
+<!-- 返回顶部小火箭 -->
+<a href="#" onclick="gotoTop();return false;" class="totop"></a>
+<div class="container">
+    <header id="site-header">
+        <div class="row">
+            <div class="col-md-4 col-sm-5 col-xs-8">
+                <div class="logo">
+                    <h1><a href="{% url 'blog:index' %}"><b>李繁</b> 的博客</a></h1>
+                </div>
+            </div><!-- col-md-4 -->
+            <div class="col-md-8 col-sm-7 col-xs-4">
+                <nav class="main-nav" role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" id="trigger-overlay" class="navbar-toggle">
+                            <span class="ion-navicon"></span>
+                        </button>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="cl-effect-11"><a href="{% url 'blog:index' %}" data-hover="首页">首页</a></li>
+                            <li class="cl-effect-11"><a href="{% url 'blog:about' %}" data-hover="关于">关于</a></li>
+                            <li class="cl-effect-11"><a href="{% url 'blog:contact' %}" data-hover="联系我">联系我</a></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </nav>
+                <div id="header-search-box">
+                    <a id="search-menu" href="#"><span id="search-icon" class="ion-ios-search-strong"></span></a>
+                    <div id="search-form" class="search-form">
+                        <form role="search" method="get" id="searchform" action="#">
+                            <input type="search" placeholder="搜索" required>
+                            <button type="submit"><span class="ion-ios-search-strong"></span></button>
+                        </form>
+                    </div>
+                </div>
+            </div><!-- col-md-8 -->
+        </div>
+    </header>
+</div>
+<div class="copyrights">Collect from <a href="http://www.cssmoban.com/">网页模板</a></div>
+<div class="copyrights">Modified by <a href="http://zmrenwu.com/">追梦人物的博客</a></div>
+
+<div class="content-body">
+    <div class="container">
+        <div class="row">
+            <main class="col-md-8">
+                {# ######################## 主体 ################################}
+                {% block main %}
+                {% endblock main %}
+            </main>
+            <aside class="col-md-4">
+                {# ######################## 文章目录 ################################}
+                {% block toc %}
+                {% endblock toc %}
+                {# ######################## 文章目录 ################################}
+
+                {########################## 推荐文章 ################################}
+                {% block recommend %}
+                {% endblock %}
+
+                {########################## 最近文章 ################################}
+                {% block recent_article %}
+                {% endblock %}
+
+                {########################## 归档 ################################}
+                {% block archives %}
+                {% endblock %}
+
+
+                {########################## 分类 ################################}
+                {% block category %}
+                {% endblock %}
+
+                {########################## 标签云 ################################}
+                {% block tag_cloud %}
+                {% endblock %}
+
+                {########################## 最近评论的文章 ################################}
+                {% block recent_comment %}
+                {% endblock %}
+
+                {#                <div class="rss">#}
+                {#                    <a href=""><span class="ion-social-rss-outline"></span> RSS 订阅</a>#}
+                {#                </div>#}
+            </aside>
+        </div>
+    </div>
+</div>
+<footer id="site-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="copyright">
+                    <p>XICP备1700XXXX号 | 网站已经运行：126天</p>
+                    <p>总访问量：29740次 | 独立IP：866个 | 今日访问量：555次</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Mobile Menu -->
+<div class="overlay overlay-hugeinc">
+    <button type="button" class="overlay-close"><span class="ion-ios-close-empty"></span></button>
+    <nav>
+        <ul>
+            <li><a href="{% url 'blog:index' %}">首页</a></li>
+            <li><a href="{% url 'blog:about' %}">关于</a></li>
+            <li><a href="{% url 'blog:contact' %}">联系我</a></li>
+        </ul>
+    </nav>
+</div>
+
+<script src="{% static 'blog/js/script.js' %}"></script>
+{# 量子背景特效#}
+<script src="{% static 'blog/js/particleground.js' %}"></script>
+<script src="{% static 'blog/js/particle.js' %}"></script>
+<script>
+    new Particleground.particle('#particle');
+</script>
+</body>
+</html>

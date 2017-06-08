@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load blog_tags %}
+
+{% block main %}
+    {% for post in post_list %}
+        <article class="post post-{{ post.pk }}">
+            <header class="entry-header">
+                <h1 class="entry-title">
+                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                </h1>
+                <div class="entry-meta">
+                    <span class="post-category"><a href="#">{{ post.category.name }}</a></span>
+                    <span class="post-date"><a href="#"><time class="entry-date"
+                                                              datetime="{{ post.create_time }}">{{ post.create_time }}</time></a></span>
+                    <span class="post-author"><a href="#">{{ post.author }}</a></span>
+                    <span class="comments-link"><a href="#">{{ post.comment_list.count }} 评论</a></span>
+                    <span class="views-count"><a href="#">{{ post.views }} 阅读</a></span>
+                </div>
+            </header>
+            <div class="entry-content clearfix">
+                <p>{{ post.excerpt }}....</p>
+                <div class="read-more cl-effect-14">
+                    <a href="{{ post.get_absolute_url }}" class="more-link">继续阅读 <span
+                            class="meta-nav">→</span></a>
+                </div>
+            </div>
+        </article>
+    {% empty %}
+        <div class="no-post">暂时还没有发布的文章！</div>
+    {% endfor %}
+
+    <div class="pagination">
+        <ul>
+            {% if post_list.has_previous %}
+                <a href="?page={{ post_list.paginator.num_pages }}">上一页</a>
+            {% endif %}
+            <span class="current">
+                第{{ post_list.number }}页 / 共 {{ post_list.paginator.num_pages }}页
+            </span>
+            {% if post_list.has_next %}
+                <a href="?page={{ post_list.next_page_number }}">下一页</a>
+            {% endif %}
+        </ul>
+    </div>
+{% endblock main %}
+
+{% block recommend %}
+    <div class="widget widget-recent-posts">
+        <h3 class="widget-title">推荐文章</h3>
+        {% get_recommend_article as recommend_list %}
+        <ul>
+            {% for post in recommend_list %}
+                <li>
+                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                </li>
+            {% empty %}
+                暂无推荐
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block recent_comment %}
+    <div class="widget widget-recent-posts">
+        <h3 class="widget-title">最新评论文章</h3>
+        {% get_recent_comments as coments %}
+        <ul>
+            {% for comment in coments %}
+                {% get_article_by_id comment.post_id as article %}
+                <li>
+                    <strong>{{ comment.name }}</strong>在 <a style="color: darkorchid;"
+                                                            href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+                    <strong>评论了</strong>
+                    {{ comment.text | truncatechars:45 }} ...
+                </li>
+            {% empty %}
+                暂无文章
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block tag_cloud %}
+    <div class="widget widget-tag-cloud">
+        <h3 class="widget-title">标签云</h3>
+        {% get_tags as tags %}
+        <ul>
+            {% for tag in tags %}
+                <li>
+                    <a href="{% url 'blog:tag' tag.pk %}">{{ tag.name }}</a>
+                </li>
+            {% empty %}
+                暂无文章
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block category %}
+    <div class="widget widget-category">
+        <h3 class="widget-title">分类</h3>
+        {% get_categories as category_list %}
+        <ul>
+            {% for category in category_list %}
+                <li>
+                    <a href="{% url 'blog:category' category.pk %}">{{ category.name }}<span
+                            class="post-count">({% get_post_count_by_category category.pk %})</span></a>
+                </li>
+            {% empty %}
+                暂无分类
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block recent_article %}
+    <div class="widget widget-recent-posts">
+        <h3 class="widget-title">最新文章</h3>
+        {% get_recent_posts as recent_post_list %}
+        <ul>
+            {% for post in recent_post_list %}
+                <li>
+                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                </li>
+            {% empty %}
+                暂无文章
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block archives %}
+    <div class="widget widget-archives">
+        <h3 class="widget-title">归档</h3>
+        {% archives as date_list %}
+        <ul>
+            {% for date in date_list %}
+                <li>
+                    <a href="{% url 'blog:archives' date.year date.month %}">{{ date.year }}年{{ date.month }}月</a>
+                </li>
+            {% empty %}
+                暂无归档
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

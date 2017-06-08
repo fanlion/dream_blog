@@ -1,0 +1,27 @@
+/* CSS Document */
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: none;
+}
+
+/*body {*/
+    /*height: 2000px;*/
+    /*background: #fafafa;*/
+/*}*/
+
+.totop {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    display: block;
+    width: 26px;
+    height: 62px;
+    background: url(../img/rocket.png) no-repeat 0 0;
+    -webkit-transition: all 0.2s ease-in-out;
+}
+
+.totop:hover {
+    background: url(../img/rocket.png) no-repeat 0 -62px;
+}
