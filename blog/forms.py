@@ -12,3 +12,14 @@ class PostMarkDownForm(forms.ModelForm):
     class Meta:
         fields = "__all__"
         model = Post
+
+
+class AboutMarkDownForm(forms.ModelForm):
+    """
+    About模型body属性为Markdown属性
+    """
+    body = forms.CharField(widget=AdminPagedownWidget(show_preview=True))  # 提供预览，默认提供
+
+    class Meta:
+        fields = "__all__"
+        module = About

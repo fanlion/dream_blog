@@ -48,8 +48,17 @@ def detail(request, pk):
     # 访问量+1
     post.increase_views()
 
-    # TODO  这里还没考虑分类和标签是否为公开
-    #  如果文章是公开，则显示
+    # tags = Tag.objects.all(post=post)  # 该文章的所有标签
+    # cate = Category.objects.get(post=post)  # 该文章分类
+    #
+    # is_all_tags_pub = True
+    # # 是否所有标签都为公开
+    # for t in tags:
+    #     if not t.is_pub:
+    #         is_all_tags_pub = False
+
+    # TODO 需要判断标签，分类是否为公开
+    # 如果文章是公开，则显示
     if post.is_pub:
         md = markdown.Markdown(extensions=[
             'markdown.extensions.extra',

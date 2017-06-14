@@ -1,7 +1,7 @@
 import xadmin
 from .models import Post, Category, Tag, About
 from xadmin import views
-from .forms import PostMarkDownForm
+from .forms import PostMarkDownForm, AboutMarkDownForm
 
 
 @xadmin.sites.register(views.BaseAdminView)
@@ -57,6 +57,7 @@ class AboutAdmin(object):
     """
     关于我 管理
     """
+    form = AboutMarkDownForm
     list_display = ('title', 'created_time', 'is_pub', 'views')
     list_per_page = 10
     search_fields = ['name']
