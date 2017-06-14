@@ -1,5 +1,5 @@
 import xadmin
-from .models import Comment
+from .models import Comment, CommentTest
 
 
 class CommentAdmin(object):
@@ -14,3 +14,4 @@ class CommentAdmin(object):
 
 
 xadmin.site.register(Comment, CommentAdmin)
+xadmin.site.register(CommentTest)

@@ -1,7 +1,7 @@
 import xadmin
-from .models import Post, Category, Tag, Contact
+from .models import Post, Category, Tag, About
 from xadmin import views
-from blog.forms import MarkDownForm
+from .forms import PostMarkDownForm
 
 
 @xadmin.sites.register(views.BaseAdminView)
@@ -22,20 +22,20 @@ class PostAdmin(object):
     文章管理
     """
 
-    form = MarkDownForm
+    form = PostMarkDownForm
 
-    list_display = ('title', 'create_time', 'modified_time', 'category', 'is_pub', 'is_recommend')
+    list_display = ('title', 'create_time', 'category', 'is_pub', 'is_recommend', 'views')
     list_per_page = 10
     search_fields = ['title']
     model_icon = 'fa fa-laptop'
-    list_filter = ['is_pub', 'create_time']
+    list_filter = ['is_pub', 'create_time', 'is_recommend']
 
 
 class CategoryAdmin(object):
     """
     分类管理
     """
-    list_display = ('name', 'created_time', 'modified_time')
+    list_display = ('name', 'created_time', 'modified_time', 'is_pub')
     list_per_page = 10
     search_fields = ['name']
     model_icon = 'fa fa-sitemap'
@@ -46,25 +46,25 @@ class TagAdmin(object):
     """
     文章标签管理
     """
-    list_display = ('name', 'created_time', 'modified_time')
+    list_display = ('name', 'created_time', 'modified_time', 'is_pub')
     list_per_page = 10
     search_fields = ['name']
     model_icon = 'fa fa-tag'
     list_filter = ['created_time']
 
 
-class ContactAdmin(object):
+class AboutAdmin(object):
     """
-    游客留言管理
+    关于我 管理
     """
-    list_display = ('name', 'subject', 'email', 'created_time')
+    list_display = ('title', 'created_time', 'is_pub', 'views')
     list_per_page = 10
-    search_fields = ['name', 'email']
-    model_icon = 'fa fa-comment'
+    search_fields = ['name']
+    model_icon = 'fa fa-leaf'
     list_filter = ['created_time']
 
 
 xadmin.site.register(Post, PostAdmin)
 xadmin.site.register(Category, CategoryAdmin)
 xadmin.site.register(Tag, TagAdmin)
-xadmin.site.register(Contact, ContactAdmin)
+xadmin.site.register(About, AboutAdmin)

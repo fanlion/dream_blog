@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>李繁&nbsp; 的博客</title>
+    <title>李繁的博客-关于</title>
 
     <!-- meta -->
     <meta charset="UTF-8">
@@ -10,7 +10,7 @@
 
     <!-- css -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'blog/css/ionicons.min.css' %}">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="{% static 'blog/css/pace.css' %}">
     <link rel="stylesheet" href="{% static 'blog/css/custom.css' %}">
 
@@ -27,7 +27,7 @@
         <div class="row">
             <div class="col-md-4 col-sm-5 col-xs-8">
                 <div class="logo">
-                    <h1><a href="index.html"><b>李繁</b> &nbsp;的博客</a></h1>
+                    <h1><a href="{% url 'blog:index' %}"><b>李繁</b>&nbsp;的博客</a></h1>
                 </div>
             </div><!-- col-md-4 -->
             <div class="col-md-8 col-sm-7 col-xs-4">
@@ -42,19 +42,23 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="cl-effect-11"><a href="{% url 'blog:index' %}" data-hover="首页">首页</a></li>
                             <li class="cl-effect-11"><a href="{% url 'blog:about' %}" data-hover="关于">关于</a></li>
-                            <li class="cl-effect-11"><a href="{% url 'blog:contact' %}" data-hover="联系我">联系我</a></li>
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </nav>
+
                 <div id="header-search-box">
                     <a id="search-menu" href="#"><span id="search-icon" class="ion-ios-search-strong"></span></a>
                     <div id="search-form" class="search-form">
-                        <form role="search" method="get" id="searchform" action="#">
-                            <input type="search" placeholder="Search" required>
+                        <form role="search" method="get" id="searchform" action="{% url 'blog:search' %}">
+                            <input type="search" name="q" placeholder="搜索" required>
                             <button type="submit"><span class="ion-ios-search-strong"></span></button>
+                            {% if error_msg %}
+                                <p>{{ error_msg }}</p>
+                            {% endif %}
                         </form>
                     </div>
                 </div>
+
             </div><!-- col-md-8 -->
         </div>
     </header>
@@ -97,7 +101,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="copyright">
-                    <p style="margin-bottom: 2px;">XICP备1700XXXX号 | 网站已经运行：126天</p>
+                    <p style="margin-bottom: 2px;">网站已经运行：126天</p>
                     <p>总访问量：29740次 | 独立IP：866个 | 今日访问量：555次</p>
                 </div>
             </div>
@@ -112,7 +116,6 @@
         <ul>
             <li><a href="{% url 'blog:index' %}">首页</a></li>
             <li><a href="{% url 'blog:about' %}">关于</a></li>
-            <li><a href="{% url 'blog:contact' %}">联系我</a></li>
         </ul>
     </nav>
 </div>

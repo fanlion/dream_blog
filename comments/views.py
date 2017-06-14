@@ -1,8 +1,13 @@
+import json
+
 import requests
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views.decorators.csrf import csrf_exempt
+
 from blog.models import Post
 from .forms import CommentForm
+from comments.models import CommentTest
 from comments import settings as blog_settings
 
 
@@ -28,6 +33,15 @@ def post_comment(request, post_pk):
             return render(request, 'blog/detail.html', context=context)
 
     return redirect(post)
+
+
+@csrf_exempt
+def neteasy_comment_callback(request):
+    data = request.body.decode('utf-8')
+    comm = CommentTest(data=data)
+    comm.save()
+    print(data)
+    return HttpResponse()
 
 
 def github_login_callback(request):

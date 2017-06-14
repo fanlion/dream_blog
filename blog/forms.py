@@ -1,20 +1,9 @@
 from django import forms
-from .models import Contact
 from pagedown.widgets import AdminPagedownWidget
-from .models import Post
+from .models import Post, About
 
 
-class ContactForm(forms.ModelForm):
-    """
-    联系我  表单
-    """
-
-    class Meta:
-        model = Contact
-        fields = ['name', 'email', 'subject', 'message']
-
-
-class MarkDownForm(forms.ModelForm):
+class PostMarkDownForm(forms.ModelForm):
     """
     Post模型的body属性为Markdown属性
     """

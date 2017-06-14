@@ -9,8 +9,7 @@ urlpatterns = [
     url(r'^archives/(?P<year>[0-9]{4})/(?P<month>[0-9]{1,2})/$', views.archives, name='archives'),
     url(r'^category/(?P<pk>[0-9]+)/$', views.category, name='category'),
     url(r'^tag/(?P<pk>[0-9]+)/$', views.tag, name='tag'),
-
-    url(r'^contact/', views.contact, name='contact'),
+    url(r'^search/$', views.search, name='search'),
     url(r'^about/', views.about, name='about'),
 
 ]

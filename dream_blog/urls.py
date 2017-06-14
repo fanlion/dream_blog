@@ -18,12 +18,11 @@ from django.conf.urls import url, include
 import xadmin
 
 urlpatterns = [
-    # url(r'^admin/', admin.site.urls),
     url(r'', include('blog.urls', namespace='blog')),
-    url(r'', include('comments.urls', namespace='comments')),
+    url(r'^comments/', include('comments.urls', namespace='comments')),
     url(r'^ueditor/', include('DjangoUeditor.urls')),
     url(r'^user/', include('users.urls', namespace='users')),
-    url(r'^admin/', xadmin.site.urls),
+    url(r'^xadmin/', xadmin.site.urls),
 ]
 
 #  给UEditor设置
