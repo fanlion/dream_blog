@@ -125,7 +125,7 @@ class About(models.Model):
 @python_2_unicode_compatible
 class FriendSite(models.Model):
     """
-    友好链接，链接互换
+    友情链接，链接互换
     """
     site_name = models.CharField(max_length=20, blank=False, verbose_name='站点名称')  # 站点名称
     site_url = models.URLField(max_length=150, blank=False, verbose_name='站点地址')  # 站点地址
@@ -139,5 +139,26 @@ class FriendSite(models.Model):
         return self.site_name
 
     class Meta:
-        verbose_name = '链接互换'
+        verbose_name = '友情链接'
         verbose_name_plural = verbose_name
+
+
+@python_2_unicode_compatible
+class VisitRecord(models.Model):
+    """
+    游客访问记录 
+    """
+    http_host = models.CharField(max_length=30, verbose_name='host')  # HTTP_HOST
+    http_referer = models.CharField(max_length=40, verbose_name='referer')  # 访问链接
+    http_user_agent = models.CharField(max_length=100, verbose_name='agent')  # 客户端的user-agent字符串
+    ip = models.CharField(max_length=20, verbose_name='ip')  # 客户端的IP地址
+    server_name = models.CharField(max_length=10, verbose_name='server_name')  # 服务器的主机名
+    created_time = models.DateTimeField(auto_now_add=True, verbose_name='请求时间')  # 访问时间
+
+    class Meta:
+        verbose_name = '访问记录'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.ip
+

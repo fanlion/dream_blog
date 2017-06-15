@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>李繁的博客-关于</title>
+    <title>VanBlog-关于</title>
 
     <!-- meta -->
     <meta charset="UTF-8">
@@ -27,7 +27,7 @@
         <div class="row">
             <div class="col-md-4 col-sm-5 col-xs-8">
                 <div class="logo">
-                    <h1><a href="{% url 'blog:index' %}"><b>李繁</b>&nbsp;的博客</a></h1>
+                    <h1><a href="{% url 'blog:index' %}"><b>Van</b>Blog</a></h1>
                 </div>
             </div><!-- col-md-4 -->
             <div class="col-md-8 col-sm-7 col-xs-4">
@@ -40,8 +40,8 @@
 
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="cl-effect-11"><a href="{% url 'blog:index' %}" data-hover="首页">首页</a></li>
-                            <li class="cl-effect-11"><a href="{% url 'blog:about' %}" data-hover="关于">关于</a></li>
+                            <li class="cl-effect-11"><a href="{% url 'blog:index' %}" data-hover="Home">Home</a></li>
+                            <li class="cl-effect-11"><a href="{% url 'blog:about' %}" data-hover="About">About</a></li>
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </nav>
@@ -50,7 +50,7 @@
                     <a id="search-menu" href="#"><span id="search-icon" class="ion-ios-search-strong"></span></a>
                     <div id="search-form" class="search-form">
                         <form role="search" method="get" id="searchform" action="{% url 'blog:search' %}">
-                            <input type="search" name="q" placeholder="搜索" required>
+                            <input type="search" name="q" placeholder="Search" required>
                             <button type="submit"><span class="ion-ios-search-strong"></span></button>
                             {% if error_msg %}
                                 <p>{{ error_msg }}</p>
@@ -101,8 +101,8 @@
     <button type="button" class="overlay-close"><span class="ion-ios-close-empty"></span></button>
     <nav>
         <ul>
-            <li><a href="{% url 'blog:index' %}">首页</a></li>
-            <li><a href="{% url 'blog:about' %}">关于</a></li>
+            <li><a href="{% url 'blog:index' %}">Home</a></li>
+            <li><a href="{% url 'blog:about' %}">About</a></li>
         </ul>
     </nav>
 </div>

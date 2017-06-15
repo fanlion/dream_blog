@@ -16,7 +16,8 @@
                     {% else %}
                         <span class="post-category"><a href="#">非原创</a></span>
                     {% endif %}
-                    <span class="post-date"><a href="#"><time class="entry-date"
+                    <span class="post-author"><a href="#">{{ post.body | wordcount }}字</a></span>
+                    <span class="post-date"><a href="{% url 'blog:archives' post.create_time.year post.create_time.month %}"><time class="entry-date"
                                                               datetime="{{ post.create_time }}">{{ post.create_time }}</time></a></span>
                     <span class="post-author"><a href="#">{{ post.author }}</a></span>
                     <span class="comments-link"><a href="#">{{ post.comment_list.count }} 评论</a></span>
@@ -26,8 +27,8 @@
             <div class="entry-content clearfix">
                 <p>{{ post.excerpt }}....</p>
                 <div class="read-more cl-effect-14">
-                    <a href="{{ post.get_absolute_url }}" class="more-link">继续阅读 <span
-                            class="meta-nav">→</span></a>
+                    <a href="{{ post.get_absolute_url }}" class="more-link">More <span
+                            class="meta-nav">-&gt;</span></a>
                 </div>
             </div>
         </article>
@@ -159,7 +160,7 @@
         <ul>
             {% for site in friend_site_list %}
                 <li>
-                    <a href="{{ site.site_url }}">{{ site.site_name }}</a>
+                    <a href="{{ site.site_url }}">{{ site.site_name | truncatechars:20 }}</a>
                 </li>
             {% empty %}
                 暂无友情链接

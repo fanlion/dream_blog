@@ -4,5 +4,6 @@ venv/
 staicfile/
 media/
 *.pyc
+db.sqlite3
 *.swp
 __pycache__/

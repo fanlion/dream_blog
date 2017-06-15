@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Post, Category, Tag, About
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
+from .utils import PaginationPost
 
 
 # @cache_page(60 * 30)  # 缓存30分钟
@@ -17,8 +18,12 @@ def index(request, page_size=15):
         '-create_time')  # 获取所有发表的文章
 
     paginator = Paginator(post_list, page_size)
-
     page = request.GET.get('page')
+    # if len(post_list) < int(page):
+    #     pass
+
+    # paginator_data = PaginationPost(paginator, paginator.page(page), True)
+
     try:
         post_list = paginator.page(page)
     except PageNotAnInteger:

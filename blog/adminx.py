@@ -1,5 +1,5 @@
 import xadmin
-from .models import Post, Category, Tag, About, FriendSite
+from .models import Post, Category, Tag, About, FriendSite, VisitRecord
 from xadmin import views
 
 # 管理界面每页展示多少条目
@@ -37,17 +37,14 @@ class PostAdmin(object):
         self.message_user(request, "%s篇文章标记为发布状态." % rows_updated)  # 向用户反馈信息
 
     def make_recommend(self, request, queryset):
-        """推荐文章Action,用于回调"""
         rows_updated = queryset.update(is_recommend=True)
         self.message_user(request, "%s篇文章标记为推荐状态." % rows_updated)  # 向用户反馈信息
 
     def unmake_published(self, request, queryset):
-        """取消发布文章Action"""
         rows_updated = queryset.update(is_pub=False)
         self.message_user(request, "%s篇文章标记为非发布状态." % rows_updated)  # 向用户反馈信息
 
     def unmake_recommend(self, request, queryset):
-        """取消推荐文章Action"""
         rows_updated = queryset.update(is_recommend=False)
         self.message_user(request, "%s篇文章标记为非推荐状态." % rows_updated)  # 向用户反馈信息
 
@@ -67,16 +64,14 @@ class CategoryAdmin(object):
     list_per_page = LIST_PER_PAGE
     search_fields = ['name']
     model_icon = 'fa fa-sitemap'
-    list_filter = ['created_time']
+    list_filter = ['created_time', 'is_pub']
     list_editable = ('name', 'is_pub')
 
     def make_published(self, request, queryset):
-        """分类公开 Action"""
         rows_updated = queryset.update(is_pub=True)
         self.message_user(request, "%s个分类标记为公开状态." % rows_updated)  # 向用户反馈信息
 
     def unmake_published(self, request, queryset):
-        """取消分类公开 Action"""
         rows_updated = queryset.update(is_pub=False)
         self.message_user(request, "%s个分类标记为非公开状态." % rows_updated)  # 向用户反馈信息
 
@@ -97,12 +92,10 @@ class TagAdmin(object):
     list_editable = ('name', 'is_pub')
 
     def make_published(self, request, queryset):
-        """分类公开 Action"""
         rows_updated = queryset.update(is_pub=True)
         self.message_user(request, "%s个标签标记为公开状态." % rows_updated)  # 向用户反馈信息
 
     def unmake_published(self, request, queryset):
-        """取消分类公开 Action"""
         rows_updated = queryset.update(is_pub=False)
         self.message_user(request, "%s个标签标记为非公开状态." % rows_updated)  # 向用户反馈信息
 
@@ -123,12 +116,10 @@ class AboutAdmin(object):
     list_editable = ('title', 'is_pub', 'views')
 
     def unmake_published(self, request, queryset):
-        """关于我取消公开 Action"""
         rows_updated = queryset.update(is_pub=False)
         self.message_user(request, "%s篇文章标记为非公开状态." % rows_updated)  # 向用户反馈信息
 
     def make_published(self, request, queryset):
-        """关于我公开 Action"""
         rows_updated = queryset.update(is_pub=True)
         self.message_user(request, "%s篇文章标记为公开状态." % rows_updated)  # 向用户反馈信息
 
@@ -149,12 +140,10 @@ class FriendSiteAdmin(object):
     list_editable = ('site_url', 'site_name', 'is_pub')
 
     def unmake_published(self, request, queryset):
-        """关于我取消公开 Action"""
         rows_updated = queryset.update(is_pub=False)
         self.message_user(request, "%s个链接记为非公开状态." % rows_updated)  # 向用户反馈信息
 
     def make_published(self, request, queryset):
-        """关于我公开 Action"""
         rows_updated = queryset.update(is_pub=True)
         self.message_user(request, "%s个链接标记为公开状态." % rows_updated)  # 向用户反馈信息
 
@@ -163,8 +152,20 @@ class FriendSiteAdmin(object):
     actions = [unmake_published, make_published]
 
 
+class VisitRecordAdmin(object):
+    """
+    游客访问记录 管理
+    """
+    list_display = ('ip', 'http_referer', 'created_time')
+    list_per_page = LIST_PER_PAGE
+    search_fields = ['ip']
+    model_icon = 'fa fa-link'
+    list_filter = ['created_time', 'http_referer']
+
+
 xadmin.site.register(Post, PostAdmin)
 xadmin.site.register(Category, CategoryAdmin)
 xadmin.site.register(Tag, TagAdmin)
 xadmin.site.register(About, AboutAdmin)
 xadmin.site.register(FriendSite, FriendSiteAdmin)
+xadmin.site.register(VisitRecord, VisitRecordAdmin)
