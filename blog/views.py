@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from markdown.extensions.toc import TocExtension
 from django.utils.text import slugify
 
-from .models import Post, Category, Tag
+from .models import Post, Category, Tag, About
 from comments.forms import CommentForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.cache import cache_page
@@ -155,7 +155,7 @@ def tag(request, pk):
     except EmptyPage:
         post_list = paginator.page(paginator.num_pages)
 
-    return render(request, 'blog/index.html', context={'post_list': post_list})
+    return render(request, 'blog/index.html', {'post_list': post_list})
 
 
 # @cache_page(60 * 60 * 12)  # 十二小时
@@ -165,7 +165,18 @@ def about(request):
     :param request: 
     :return: 
     """
-    return render(request, 'blog/about.html')
+    post = About.objects.filter(is_pub=True).order_by('created_time')  # 只能有一篇文章为发布状态
+    # 如果有多篇文章
+    if post and len(post) >= 1:
+        post = post[0]
+        md = markdown.Markdown(extensions=[
+            'markdown.extensions.extra',
+            'markdown.extensions.codehilite',
+            TocExtension(slugify=slugify),
+        ])
+        post.body = md.convert(post.body)
+
+    return render(request, 'blog/about.html', {'post': post})
 
 
 def search(request, page_size=10):

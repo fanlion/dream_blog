@@ -19,7 +19,7 @@ class Category(models.Model):
 
     class Meta:
         verbose_name = '分类'
-        verbose_name_plural = '分类'
+        verbose_name_plural = verbose_name
         ordering = ['-created_time']  # 按哪个排序
 
     def __str__(self):
@@ -39,7 +39,7 @@ class Tag(models.Model):
 
     class Meta:
         verbose_name = '标签'
-        verbose_name_plural = '标签'
+        verbose_name_plural = verbose_name
         ordering = ['-created_time']  # 按哪个排序
 
     def __str__(self):
@@ -66,7 +66,7 @@ class Post(models.Model):
 
     class Meta:
         verbose_name = '文章'
-        verbose_name_plural = '文章'
+        verbose_name_plural = verbose_name
         ordering = ['-create_time']  # 按哪个排序
 
     def __str__(self):

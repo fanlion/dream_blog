@@ -17,5 +17,6 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^register/', views.register, name='register')
+
+    # url(r'^register/', views.register, name='register')  # 暂时取消注册功能，
 ]

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import RegisterForm
 
 
+# 功能暂时取消，开发待定(URL已注销)
 def register(request):
     """
     注册视图

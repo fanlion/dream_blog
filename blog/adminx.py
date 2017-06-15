@@ -120,6 +120,20 @@ class AboutAdmin(object):
     model_icon = 'fa fa-leaf'
     list_filter = ['created_time']
 
+    def unmake_published(self, request, queryset):
+        """关于我取消公开 Action"""
+        rows_updated = queryset.update(is_pub=False)
+        self.message_user(request, "%s篇文章标记为非公开状态." % rows_updated)  # 向用户反馈信息
+
+    def make_published(self, request, queryset):
+        """关于我公开 Action"""
+        rows_updated = queryset.update(is_pub=True)
+        self.message_user(request, "%s篇文章标记为公开状态." % rows_updated)  # 向用户反馈信息
+
+    unmake_published.short_description = '取消公开'
+    make_published.short_description = '公开'
+    actions = [unmake_published, make_published]
+
 
 xadmin.site.register(Post, PostAdmin)
 xadmin.site.register(Category, CategoryAdmin)
