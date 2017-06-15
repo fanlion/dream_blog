@@ -58,6 +58,7 @@ class Post(models.Model):
     excerpt = models.TextField(max_length=200, blank=True, verbose_name='摘要')  # 摘要
     is_pub = models.BooleanField(default=True, verbose_name='是否公开')  # 是否公开
     is_recommend = models.BooleanField(default=False, verbose_name='是否推荐')  # 是否推荐
+    is_original = models.BooleanField(default=True, verbose_name='是否原创')  # 是否原创
     category = models.ForeignKey(Category, verbose_name='分类')  # 分类
     tags = models.ManyToManyField(Tag, blank=True, verbose_name='标签')  # 标签
     author = models.ForeignKey(User, verbose_name='作者')  # 作者

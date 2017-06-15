@@ -10,6 +10,11 @@
                 </h1>
                 <div class="entry-meta">
                     <span class="post-category"><a href="#">{{ post.category.name }}</a></span>
+                    {% if post.is_original %}
+                        <span class="post-category"><a href="#">原创</a></span>
+                    {% else %}
+                        <span class="post-category"><a href="#">非原创</a></span>
+                    {% endif %}
                     <span class="post-date"><a href="#"><time class="entry-date"
                                                               datetime="{{ post.create_time }}">{{ post.create_time }}</time></a></span>
                     <span class="post-author"><a href="#">{{ post.author }}</a></span>
@@ -71,7 +76,7 @@
                     <strong>{{ comment.name }}</strong>在 <a style="color: darkorchid;"
                                                             href="{{ article.get_absolute_url }}">{{ article.title }}</a>
                     <strong>评论了</strong>
-                    {{ comment.text | truncatechars:45 }} ...
+                    {{ comment.text | truncatechars:10 }} ...
                 </li>
             {% empty %}
                 暂无文章
