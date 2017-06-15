@@ -20,7 +20,6 @@ import xadmin
 urlpatterns = [
     url(r'', include('blog.urls', namespace='blog')),
     url(r'^comments/', include('comments.urls', namespace='comments')),
-    url(r'^ueditor/', include('DjangoUeditor.urls')),
     url(r'^user/', include('users.urls', namespace='users')),
     url(r'^xadmin/', xadmin.site.urls),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),

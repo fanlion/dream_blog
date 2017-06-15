@@ -2,5 +2,5 @@
 .idea/
 venv/
 staicfile/
-media/*
+media/
 __pycache__/

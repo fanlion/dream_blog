@@ -40,7 +40,6 @@ INSTALLED_APPS = [
 
     'blog',
     'comments',
-    # 'DjangoUeditor',
     'users',
     'xadmin',
     'crispy_forms',

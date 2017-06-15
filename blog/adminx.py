@@ -28,7 +28,7 @@ class PostAdmin(object):
     search_fields = ['title']
     model_icon = 'fa fa-laptop'
     list_filter = ['is_pub', 'create_time', 'is_recommend']
-    # list_editable = ('title', 'is_pub', 'is_recommend', 'views')
+    list_editable = ('title', 'is_pub', 'is_recommend', 'views')
 
     def make_published(self, request, queryset):
         """发布文章Action,用于回调"""
