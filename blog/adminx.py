@@ -23,7 +23,8 @@ class PostAdmin(object):
     """
     文章管理
     """
-    list_display = ('title', 'create_time', 'category', 'is_pub', 'is_recommend', 'views')
+    list_display = ('pk', 'title', 'create_time', 'category', 'is_pub', 'is_recommend', 'views')
+    list_display_links = ('pk', 'title')
     list_per_page = LIST_PER_PAGE
     search_fields = ['title']
     model_icon = 'fa fa-laptop'
@@ -114,12 +115,12 @@ class AboutAdmin(object):
     """
     关于我 管理
     """
-    # form = AboutMarkDownForm
     list_display = ('title', 'created_time', 'is_pub', 'views')
     list_per_page = LIST_PER_PAGE
     search_fields = ['name']
     model_icon = 'fa fa-leaf'
     list_filter = ['created_time']
+    list_editable = ('title', 'is_pub', 'views')
 
     def unmake_published(self, request, queryset):
         """关于我取消公开 Action"""

@@ -3,4 +3,6 @@
 venv/
 staicfile/
 media/
+*.pyc
+*.swp
 __pycache__/

@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import url, include
 import xadmin
+from blog.feeds import AllPostRssFeed
 
 urlpatterns = [
     url(r'', include('blog.urls', namespace='blog')),
@@ -23,6 +24,7 @@ urlpatterns = [
     url(r'^user/', include('users.urls', namespace='users')),
     url(r'^xadmin/', xadmin.site.urls),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+    url(r'^all/rss/$', AllPostRssFeed(), name='rss'),
 ]
 
 #  给UEditor设置

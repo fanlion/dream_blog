@@ -9,7 +9,8 @@
                     <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
                 </h1>
                 <div class="entry-meta">
-                    <span class="post-category"><a href="#">{{ post.category.name }}</a></span>
+                    <span class="post-category"><a
+                            href="{% url 'blog:category' post.category.pk %}">{{ post.category.name }}</a></span>
                     {% if post.is_original %}
                         <span class="post-category"><a href="#">原创</a></span>
                     {% else %}
@@ -148,5 +149,11 @@
                 暂无归档
             {% endfor %}
         </ul>
+    </div>
+{% endblock %}
+
+{% block rss %}
+    <div class="rss">
+        <a href="{% url 'rss' %}"><span class="ion-social-rss-outline"></span> RSS 订阅</a>
     </div>
 {% endblock %}

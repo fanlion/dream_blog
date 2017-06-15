@@ -72,7 +72,7 @@
                 <article class="post post-{{ post.pk }}">
                     <header class="entry-header">
                         <h1 class="entry-title">
-                            <a href="#">{{ post.title }}</a>
+                            <a href="{% url 'blog:detail' post.pk %}">{{ post.title }}</a>
                         </h1>
                         <div class="entry-meta">
                             <span class="post-category"><a
