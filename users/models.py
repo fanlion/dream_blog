@@ -12,7 +12,7 @@ class User(AbstractUser):
 
     class Meta(AbstractUser.Meta):
         verbose_name = '用户'
-        verbose_name_plural = '用户'
+        verbose_name_plural = verbose_name
 
     def __str__(self):
         return self.nickname
