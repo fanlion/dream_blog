@@ -1,6 +1,6 @@
 from django import template
 from django.db.models import Count
-from blog.models import Post, Category, Tag
+from blog.models import Post, Category, Tag, FriendSite
 from comments.models import Comment
 
 register = template.Library()
@@ -71,3 +71,12 @@ def get_article_by_id(pk):
     :return: 
     """
     return Post.objects.filter(is_pub=True).get(pk=pk)
+
+
+@register.simple_tag
+def get_friend_sites():
+    """
+    获取所有友情链接
+    :return: 
+    """
+    return FriendSite.objects.filter(is_pub=True)

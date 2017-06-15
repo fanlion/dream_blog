@@ -152,6 +152,22 @@
     </div>
 {% endblock %}
 
+{% block friend_sites %}
+    <div class="widget widget-archives">
+        <h3 class="widget-title">友情链接</h3>
+        {% get_friend_sites as friend_site_list %}
+        <ul>
+            {% for site in friend_site_list %}
+                <li>
+                    <a href="{{ site.site_url }}">{{ site.site_name }}</a>
+                </li>
+            {% empty %}
+                暂无友情链接
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
 {% block rss %}
     <div class="rss">
         <a href="{% url 'rss' %}"><span class="ion-social-rss-outline"></span> RSS 订阅</a>
