@@ -1,15 +1,8 @@
 from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
-from markdown.extensions.toc import TocExtension
-from django.utils.text import slugify
-
 from .models import Post, Category, Tag, About
-from comments.forms import CommentForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.views.decorators.cache import cache_page
 from django.db.models import Q
-
-import markdown
 
 
 # @cache_page(60 * 30)  # 缓存30分钟
@@ -20,7 +13,7 @@ def index(request, page_size=15):
     :param page_size: 每页大小，默认为15
     :return:
     """
-    post_list = Post.objects.filter(is_pub=True).filter(tags__is_pub=True).filter(category__is_pub=True).order_by(
+    post_list = Post.objects.filter(is_pub=True).filter(category__is_pub=True).order_by(
         '-create_time')  # 获取所有发表的文章
 
     paginator = Paginator(post_list, page_size)
@@ -60,21 +53,8 @@ def detail(request, pk):
     # TODO 需要判断标签，分类是否为公开
     # 如果文章是公开，则显示
     if post.is_pub:
-        md = markdown.Markdown(extensions=[
-            'markdown.extensions.extra',
-            'markdown.extensions.codehilite',
-            TocExtension(slugify=slugify),
-        ])
-        post.body = md.convert(post.body)
-
-        # 评论表单
-        form = CommentForm()
         # 获取评论
-        comment_list = post.comment_set.all()
-        return render(request, 'blog/detail.html', context={'post': post,
-                                                            'form': form,
-                                                            'toc': md.toc,
-                                                            'comment_list': comment_list})
+        return render(request, 'blog/detail.html', {'post': post})
     else:
         raise Http404(' 访问的页面不存在')
 
@@ -169,13 +149,6 @@ def about(request):
     # 如果有多篇文章
     if post and len(post) >= 1:
         post = post[0]
-        md = markdown.Markdown(extensions=[
-            'markdown.extensions.extra',
-            'markdown.extensions.codehilite',
-            TocExtension(slugify=slugify),
-        ])
-        post.body = md.convert(post.body)
-
     return render(request, 'blog/about.html', {'post': post})
 
 
@@ -193,7 +166,7 @@ def search(request, page_size=10):
         return render(request, 'blog/index.html', {'error_msg': error_msg})
 
     post_list = Post.objects.filter(Q(title__icontains=q) | Q(body__icontains=q)).filter(is_pub=True).filter(
-        tags__is_pub=True).filter(category__is_pub=True).order_by(
+        category__is_pub=True).order_by(
         '-create_time')
     paginator = Paginator(post_list, page_size)
 

@@ -1,7 +1,6 @@
 import xadmin
-from .models import Post, Category, Tag, About
+from .models import Post, Category, Tag, About, FriendSite
 from xadmin import views
-from .forms import PostMarkDownForm, AboutMarkDownForm
 
 # 管理界面每页展示多少条目
 LIST_PER_PAGE = 15
@@ -24,12 +23,12 @@ class PostAdmin(object):
     """
     文章管理
     """
-    form = PostMarkDownForm
     list_display = ('title', 'create_time', 'category', 'is_pub', 'is_recommend', 'views')
     list_per_page = LIST_PER_PAGE
     search_fields = ['title']
     model_icon = 'fa fa-laptop'
     list_filter = ['is_pub', 'create_time', 'is_recommend']
+    # list_editable = ('title', 'is_pub', 'is_recommend', 'views')
 
     def make_published(self, request, queryset):
         """发布文章Action,用于回调"""
@@ -68,6 +67,7 @@ class CategoryAdmin(object):
     search_fields = ['name']
     model_icon = 'fa fa-sitemap'
     list_filter = ['created_time']
+    list_editable = ('name', 'is_pub')
 
     def make_published(self, request, queryset):
         """分类公开 Action"""
@@ -93,6 +93,7 @@ class TagAdmin(object):
     search_fields = ['name']
     model_icon = 'fa fa-tag'
     list_filter = ['created_time']
+    list_editable = ('name', 'is_pub')
 
     def make_published(self, request, queryset):
         """分类公开 Action"""
@@ -113,7 +114,7 @@ class AboutAdmin(object):
     """
     关于我 管理
     """
-    form = AboutMarkDownForm
+    # form = AboutMarkDownForm
     list_display = ('title', 'created_time', 'is_pub', 'views')
     list_per_page = LIST_PER_PAGE
     search_fields = ['name']
@@ -135,7 +136,34 @@ class AboutAdmin(object):
     actions = [unmake_published, make_published]
 
 
+class FriendSiteAdmin(object):
+    """
+    链接互换(友链) 管理
+    """
+    list_display = ('site_name', 'site_url', 'created_time', 'is_pub')
+    list_per_page = LIST_PER_PAGE
+    search_fields = ['site_url']
+    model_icon = 'fa fa-link'
+    list_filter = ['created_time', 'is_pub']
+    list_editable = ('site_url', 'site_name', 'is_pub')
+
+    def unmake_published(self, request, queryset):
+        """关于我取消公开 Action"""
+        rows_updated = queryset.update(is_pub=False)
+        self.message_user(request, "%s个链接记为非公开状态." % rows_updated)  # 向用户反馈信息
+
+    def make_published(self, request, queryset):
+        """关于我公开 Action"""
+        rows_updated = queryset.update(is_pub=True)
+        self.message_user(request, "%s个链接标记为公开状态." % rows_updated)  # 向用户反馈信息
+
+    unmake_published.short_description = '取消公开'
+    make_published.short_description = '公开'
+    actions = [unmake_published, make_published]
+
+
 xadmin.site.register(Post, PostAdmin)
 xadmin.site.register(Category, CategoryAdmin)
 xadmin.site.register(Tag, TagAdmin)
 xadmin.site.register(About, AboutAdmin)
+xadmin.site.register(FriendSite, FriendSiteAdmin)

@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^ueditor/', include('DjangoUeditor.urls')),
     url(r'^user/', include('users.urls', namespace='users')),
     url(r'^xadmin/', xadmin.site.urls),
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 #  给UEditor设置

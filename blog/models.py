@@ -1,9 +1,9 @@
-import markdown
 from django.db import models
 from users.models import User
 from django.urls import reverse
 from django.utils.six import python_2_unicode_compatible
 from django.utils.html import strip_tags
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 @python_2_unicode_compatible
@@ -52,7 +52,7 @@ class Post(models.Model):
     文章
     """
     title = models.CharField(max_length=70, verbose_name='标题')  # 标题
-    body = models.TextField(verbose_name='正文')  # 正文
+    body = RichTextUploadingField(config_name='default', verbose_name='正文')  # ckeditor,配置在工程settings中
     create_time = models.DateTimeField(verbose_name='发布日期')  # 发布时间
     modified_time = models.DateTimeField(verbose_name='修改日期')  # 修改时间
     excerpt = models.TextField(max_length=200, blank=True, verbose_name='摘要')  # 摘要
@@ -90,11 +90,7 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         # 如果摘要没有填写，则自动生成
         if not self.excerpt:
-            md = markdown.Markdown(extensions=[
-                'markdown.extensions.extra',
-                'markdown.extensions.codehilite',
-            ])
-            self.excerpt = strip_tags(md.convert(self.body))[:54]
+            self.excerpt = strip_tags(self.body)[:74]
         super(Post, self).save(*args, **kwargs)
 
 
@@ -104,8 +100,8 @@ class About(models.Model):
     关于 model
     """
     title = models.CharField(max_length=200, verbose_name='标题')  # 标题
-    body = models.TextField(verbose_name='正文')  # 正文
     created_time = models.DateTimeField(verbose_name='发布日期')  # 发布时间
+    body = RichTextUploadingField(config_name='default', verbose_name='正文')  # ckeditor,配置在工程settings中
     modified_time = models.DateTimeField(verbose_name='修改日期')  # 修改时间
     is_pub = models.BooleanField(default=True, verbose_name='是否公开')  # 是否公开
     views = models.PositiveIntegerField(default=0, verbose_name='访问量')  # 点击量
@@ -124,3 +120,24 @@ class About(models.Model):
 
     def __str__(self):
         return self.title
+
+
+@python_2_unicode_compatible
+class FriendSite(models.Model):
+    """
+    友好链接，链接互换
+    """
+    site_name = models.CharField(max_length=20, blank=False, verbose_name='站点名称')  # 站点名称
+    site_url = models.URLField(max_length=150, blank=False, verbose_name='站点地址')  # 站点地址
+    admin_name = models.CharField(max_length=30, verbose_name='站长名称')  # 站长名称
+    admin_contact = models.CharField(max_length=200, verbose_name='站长联系方式')  # 站长联系方式
+    created_time = models.DateTimeField(verbose_name='创建时间')  # 创建时间
+    modified_time = models.DateTimeField(verbose_name='修改时间')  # 修改时间
+    is_pub = models.BooleanField(default=False, verbose_name='是否发布')  # 默认不发布
+
+    def __str__(self):
+        return self.site_name
+
+    class Meta:
+        verbose_name = '链接互换'
+        verbose_name_plural = verbose_name

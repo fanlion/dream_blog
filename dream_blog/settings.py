@@ -40,11 +40,12 @@ INSTALLED_APPS = [
 
     'blog',
     'comments',
-    'pagedown',
-    'DjangoUeditor',
+    # 'DjangoUeditor',
     'users',
     'xadmin',
     'crispy_forms',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -128,19 +129,28 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False  # 支持MySQL
 
 # static文件的虚拟路径
 STATIC_URL = '/static/'
-
 # 公共静态文件
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
-
 # 部署阶段静态文件收集路径
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfile')
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'users.User'  # 设置成自定的User
 
+CKEDITOR_UPLOAD_PATH = 'uploads/'  # 设置ckeditor文件上传的路径
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 400,
+        'width': 600,
+    },
+    'awesome_ckeditor': {
+        'toolbar': 'Basic',
+    },
+}

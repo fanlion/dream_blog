@@ -30,7 +30,7 @@ def post_comment(request, post_pk):
             context = {'post': post,
                        'form': form,
                        'comment_list': comment_list}
-            return render(request, 'blog/detail.html', context=context)
+            return render(request, 'blog/detail2.html', context=context)
 
     return redirect(post)
 

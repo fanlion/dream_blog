@@ -1,46 +1,131 @@
-{% extends 'base.html' %}
-{% block main %}
-    <article class="post post-{{ post.pk }}">
-        <header class="entry-header">
-            <h1 class="entry-title">{{ post.title }}</h1>
-            <div class="entry-meta">
-                <span class="post-category"><a
-                        href="{% url 'blog:category' post.category.pk %}">{{ post.category.name }}</a></span>
-                <span class="post-date"><a
-                        href="{% url 'blog:archives' post.create_time.year post.create_time.month %}"><time
-                        class="entry-date"
-                        datetime="{{ post.create_time }}">{{ post.create_time }}</time></a></span>
-                <span class="post-author"><a href="#">{{ post.author }}</a></span>
-                <span class="comments-link"><a href="#">{{ comment_list.count }} 评论</a></span>
-                <span class="views-count"><a href="#">{{ post.views }} 阅读</a></span>
-            </div>
-        </header>
-        <div class="entry-content clearfix">
-            {{ post.body | safe }}
+{% load staticfiles %}
+{% load blog_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>李繁的博客-{{ post.title }}</title>
+
+    <!-- meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- css -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="{% static 'blog/css/pace.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/custom.css' %}">
+
+    <!-- js -->
+    <script src="{% static 'js/jquery-2.1.3.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'blog/js/pace.min.js' %}"></script>
+    <script src="{% static 'blog/js/modernizr.custom.js' %}"></script>
+</head>
+
+<body>
+<!-- 量子效果 -->
+<div id="particle" style="height: 150px;"></div>
+<div class="container">
+    <header id="site-header">
+        <div class="row">
+            <div class="col-md-4 col-sm-5 col-xs-8">
+                <div class="logo">
+                    <h1><a href="{% url 'blog:index' %}"><b>李繁</b>&nbsp;的博客</a></h1>
+                </div>
+            </div><!-- col-md-4 -->
+            <div class="col-md-8 col-sm-7 col-xs-4">
+                <nav class="main-nav" role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" id="trigger-overlay" class="navbar-toggle">
+                            <span class="ion-navicon"></span>
+                        </button>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="cl-effect-11"><a href="{% url 'blog:index' %}" data-hover="首页">首页</a></li>
+                            <li class="cl-effect-11"><a href="{% url 'blog:about' %}" data-hover="关于">关于</a></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </nav>
+                <div id="header-search-box">
+                    <a id="search-menu" href="#"><span id="search-icon"
+                                                       class="ion-ios-search-strong"></span></a>
+                    <div id="search-form" class="search-form">
+                        <form role="search" method="get" id="searchform" action="{% url 'blog:search' %}">
+                            <input type="search" name="q" placeholder="搜索" required>
+                            <button type="submit"><span class="ion-ios-search-strong"></span></button>
+                        </form>
+                    </div>
+                </div>
+            </div><!-- col-md-8 -->
         </div>
-    </article>
+    </header>
+</div>
 
-    <section class="comment-area" id="comment-area">
-        <hr>
+<div class="content-body">
 
-        <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
-        <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
-        <script>
-            var cloudTieConfig = {
-                url: document.location.href,
-                sourceId: "",
-                productKey: "a7081436f6284e8eadab78110909d49d",
-                target: "cloud-tie-wrapper"
-            };
-            var yunManualLoad = true;
-            Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
-        </script>
 
-    </section>
-{% endblock main %}
-{% block toc %}
-    <div class="widget widget-content">
-        <h3 class="widget-title">文章目录</h3>
-        {{ toc | safe }}
+    <div class="container">
+        <div class="row">
+            <main class="col-md-12">
+                <article class="post post-{{ post.pk }}">
+                    <header class="entry-header">
+                        <h1 class="entry-title">
+                            <a href="#">{{ post.title }}</a>
+                        </h1>
+                        <div class="entry-meta">
+                            <span class="post-category"><a
+                                    href="{% url 'blog:category' post.category.pk %}">{{ post.category.name }}</a></span>
+
+                            <span class="post-date"><a
+                                    href="{% url 'blog:archives' post.create_time.year post.create_time.month %}"><time
+                                    class="entry-date"
+                                    datetime="{{ post.create_time }}">{{ post.create_time }}</time></a></span>
+                            <span class="post-author"><a href="#">{{ post.author }}</a></span>
+                            <span class="comments-link"><a href="#">{{ comment_list.count }} 评论</a></span>
+                            <span class="views-count"><a href="#">{{ post.views }} 阅读</a></span>
+                        </div>
+                    </header>
+                    <div class="entry-content clearfix">
+                        <p>
+                            {{ post.body | safe }}
+                        </p>
+                    </div>
+                </article>
+
+            </main>
+        </div>
     </div>
-{% endblock toc %}
+</div>
+<footer id="site-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <p class="copyright">&copy; 2014 ThemeWagon.com</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Mobile Menu -->
+<div class="overlay overlay-hugeinc">
+    <button type="button" class="overlay-close"><span class="ion-ios-close-empty"></span></button>
+    <nav>
+        <ul>
+            <li><a href="{% url 'blog:index' %}">首页</a></li>
+            <li><a href="{% url 'blog:about' %}">关于</a></li>
+        </ul>
+    </nav>
+</div>
+
+<script src="{% static 'blog/js/script.js' %}"></script>
+{# 量子背景特效#}
+<script src="{% static 'blog/js/particleground.js' %}"></script>
+<script src="{% static 'blog/js/particle.js' %}"></script>
+<script>
+    new Particleground.particle('#particle');
+</script>
+
+</body>
+</html>
