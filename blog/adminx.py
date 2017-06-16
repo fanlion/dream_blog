@@ -1,9 +1,9 @@
 import xadmin
-from .models import Post, Category, Tag, About, FriendSite, VisitRecord
+from .models import Post, Category, Tag, About, FriendSite, VisitRecord, VisitStatistics
 from xadmin import views
 
 # 管理界面每页展示多少条目
-LIST_PER_PAGE = 15
+LIST_PER_PAGE = 10
 
 
 @xadmin.sites.register(views.BaseAdminView)
@@ -156,11 +156,21 @@ class VisitRecordAdmin(object):
     """
     游客访问记录 管理
     """
-    list_display = ('ip', 'http_referer', 'created_time')
+    list_display = ('ip', 'http_path', 'created_time')
     list_per_page = LIST_PER_PAGE
     search_fields = ['ip']
-    model_icon = 'fa fa-link'
-    list_filter = ['created_time', 'http_referer']
+    model_icon = 'fa fa-file'
+    list_filter = ['created_time', 'ip', 'http_path']
+
+
+class VisitStatisticsAdmin(object):
+    """
+    运营统计 管理
+    """
+    list_display = ('created_date', 'today_visit')
+    list_per_page = LIST_PER_PAGE
+    model_icon = 'fa fa-dashboard'
+    list_filter = ['created_date']
 
 
 xadmin.site.register(Post, PostAdmin)
@@ -169,3 +179,4 @@ xadmin.site.register(Tag, TagAdmin)
 xadmin.site.register(About, AboutAdmin)
 xadmin.site.register(FriendSite, FriendSiteAdmin)
 xadmin.site.register(VisitRecord, VisitRecordAdmin)
+xadmin.site.register(VisitStatistics, VisitStatisticsAdmin)

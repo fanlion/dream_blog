@@ -1,7 +1,9 @@
 from django import template
-from django.db.models import Count
-from blog.models import Post, Category, Tag, FriendSite
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Count, Sum
+from blog.models import Post, Category, Tag, FriendSite, VisitStatistics
 from comments.models import Comment
+from django.utils import timezone
 
 register = template.Library()
 
@@ -80,3 +82,35 @@ def get_friend_sites():
     :return: 
     """
     return FriendSite.objects.filter(is_pub=True)
+
+
+@register.simple_tag
+def get_today_visit_count():
+    """
+    获取当日访问记录
+    :return: 
+    """
+    try:
+        count = VisitStatistics.objects.get(created_date=timezone.now())
+    except ObjectDoesNotExist:
+        # 记录不存在返回0, 表示当日没人访问
+        return 0
+    return count.today_visit
+
+
+@register.simple_tag
+def get_run_day_count():
+    """
+    获取站点总共运行天数
+    :return: 
+    """
+    return VisitStatistics.objects.count()
+
+
+@register.simple_tag
+def get_total_visit_count():
+    """
+    获取站点总共访问量
+    :return: 
+    """
+    return VisitStatistics.objects.all().aggregate(total_visit=Sum('today_visit'))

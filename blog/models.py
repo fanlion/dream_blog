@@ -149,8 +149,8 @@ class VisitRecord(models.Model):
     游客访问记录 
     """
     http_host = models.CharField(max_length=30, verbose_name='host')  # HTTP_HOST
-    http_referer = models.CharField(max_length=40, verbose_name='referer')  # 访问链接
-    http_user_agent = models.CharField(max_length=100, verbose_name='agent')  # 客户端的user-agent字符串
+    http_path = models.CharField(max_length=40, verbose_name='path')  # 访问链接
+    http_user_agent = models.CharField(max_length=350, verbose_name='agent')  # 客户端的user-agent字符串
     ip = models.CharField(max_length=20, verbose_name='ip')  # 客户端的IP地址
     server_name = models.CharField(max_length=10, verbose_name='server_name')  # 服务器的主机名
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='请求时间')  # 访问时间
@@ -162,3 +162,20 @@ class VisitRecord(models.Model):
     def __str__(self):
         return self.ip
 
+
+@python_2_unicode_compatible
+class VisitStatistics(models.Model):
+    """
+     站点运营统计数据，每天的有效访问量，访问ip等 
+    """
+    today_visit = models.PositiveIntegerField(default=0, verbose_name='今日访问量')  # 今日访问量
+
+    created_date = models.DateField(unique=True, editable=True, verbose_name='日期')  # 日期
+
+    class Meta:
+        verbose_name = '运营统计'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return str(self.created_date.year) + '年' + str(self.created_date.month) + '月' + str(
+            self.created_date.month) + '日'

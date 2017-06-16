@@ -71,7 +71,11 @@
         </div>
     </header>
 </div>
-
+<div class="copyrights">
+    <p>网站已经运行：{% get_run_day_count %}天</p>
+    {% get_total_visit_count as total_count %}
+    <p>总访问量：{{ total_count.total_visit }}次 | 今日访问量：{% get_today_visit_count %}次</p>
+</div>
 <div class="content-body">
     <div class="container">
         <div class="row">
@@ -124,12 +128,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-
-                <div class="copyrights">
-                    <p>网站已经运行：126天</p>
-                    <p>总访问量：29740次 | 独立IP：866个 | 今日访问量：555次</p>
+                <div class="copyright">
+                    <p>网站已经运行：{% get_run_day_count %}天</p>
+                    {% get_total_visit_count as total_count %}
+                    <p>总访问量：{{ total_count.total_visit }}次 | 今日访问量：{% get_today_visit_count %}次</p>
                 </div>
-
             </div>
         </div>
     </div>

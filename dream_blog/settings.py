@@ -55,7 +55,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
     'blog.middleware.VisitStatisticsMiddleWare',
+    'blog.middleware.VisitRecordMiddleWare',
 ]
 
 ROOT_URLCONF = 'dream_blog.urls'
@@ -131,10 +133,14 @@ USE_L10N = True
 
 USE_TZ = False  # 支持MySQL
 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # 浏览器关闭时会话过期
+
 # static文件的虚拟路径
 STATIC_URL = '/static/'
+
 # 公共静态文件
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+
 # 部署阶段静态文件收集路径
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfile')
 MEDIA_URL = '/media/'
