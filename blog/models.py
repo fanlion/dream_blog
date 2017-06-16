@@ -177,5 +177,4 @@ class VisitStatistics(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return str(self.created_date.year) + '年' + str(self.created_date.month) + '月' + str(
-            self.created_date.month) + '日'
+        return "%s 访问量" % self.created_date.strftime('%Y-%m-%d')

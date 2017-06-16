@@ -172,6 +172,32 @@ class VisitStatisticsAdmin(object):
     model_icon = 'fa fa-dashboard'
     list_filter = ['created_date']
 
+    aggregate_fields = {"today_visit": "sum"}
+
+    def _chart_month(self, obj):
+        return obj.created_date.strftime('%B')
+
+    refresh_times = (3, 5, 10)
+
+    data_charts = {
+        'today_visit': {
+            'title': u'访问量趋势图', 'x-field': 'created_date', 'y-field': ('today_visit',),
+            'order': ('created_date',),
+            # "option": {
+            #     "series": {"": {"align": "left", "barWidth": 1.0, 'show': True}},
+            # }
+        },
+
+        "per_month": {
+            'title': u"月平均访问量", "x-field": "_chart_month", "y-field": ("today_visit",),
+            "option": {
+                "series": {"bars": {"align": "center", "barWidth": 0.8, 'show': True}},
+                "xaxis": {"aggregate": "sum", "mode": "categories"},
+            },
+        },
+
+    }
+
 
 xadmin.site.register(Post, PostAdmin)
 xadmin.site.register(Category, CategoryAdmin)
