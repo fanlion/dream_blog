@@ -1,23 +1,28 @@
 """
 工具类
 """
-# from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-class PaginationPost(object):
+class PaginationBlogPost(object):
     """
     分页工具类
     """
 
-    def __init__(self, paginator, page, is_paginated):
+    def __init__(self, paginator, is_paginated, page_obj):
+        """
+        :param paginator: 
+        :param is_paginated: 
+        :param page_obj: 
+        """
+        self.is_paginated = is_paginated  # 是否分页
+        self.page = page_obj  # Page对象
         self.paginator = paginator
-        self.page = page
-        self.is_paginated = is_paginated
+        # 记录数大于每页要显示的数目，则需要分页
 
     def pagination_data(self):
         """
         构造分页导航条数据
-        :return: 
+        :return: 分页相关数据，为dictionary类型
         """
         if not self.is_paginated:
             # 如果没有分页，无需显示分页导航条
@@ -112,6 +117,7 @@ class PaginationPost(object):
             'right_has_more': right_has_more,
             'first': first,
             'last': last,
+            'is_paginated': self.is_paginated,
         }
 
         return data

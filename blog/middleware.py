@@ -59,7 +59,7 @@ class VisitStatisticsMiddleWare(MiddlewareMixin):
                 visit.save()
             except ObjectDoesNotExist:
                 # 如果该记录不存在则新建
-                visit = VisitStatistics()
+                visit = VisitStatistics(created_date=timezone.now())
                 visit.today_visit += 1
                 visit.save()
 

@@ -33,20 +33,16 @@ class PostAdmin(object):
 
     def make_published(self, request, queryset):
         """发布文章Action,用于回调"""
-        rows_updated = queryset.update(is_pub=True)
-        self.message_user(request, "%s篇文章标记为发布状态." % rows_updated)  # 向用户反馈信息
+        queryset.update(is_pub=True)
 
     def make_recommend(self, request, queryset):
-        rows_updated = queryset.update(is_recommend=True)
-        self.message_user(request, "%s篇文章标记为推荐状态." % rows_updated)  # 向用户反馈信息
+        queryset.update(is_recommend=True)
 
     def unmake_published(self, request, queryset):
-        rows_updated = queryset.update(is_pub=False)
-        self.message_user(request, "%s篇文章标记为非发布状态." % rows_updated)  # 向用户反馈信息
+        queryset.update(is_pub=False)
 
     def unmake_recommend(self, request, queryset):
-        rows_updated = queryset.update(is_recommend=False)
-        self.message_user(request, "%s篇文章标记为非推荐状态." % rows_updated)  # 向用户反馈信息
+        queryset.update(is_recommend=False)
 
     make_published.short_description = '发布'
     make_recommend.short_description = '推荐'
@@ -68,12 +64,10 @@ class CategoryAdmin(object):
     list_editable = ('name', 'is_pub')
 
     def make_published(self, request, queryset):
-        rows_updated = queryset.update(is_pub=True)
-        self.message_user(request, "%s个分类标记为公开状态." % rows_updated)  # 向用户反馈信息
+        queryset.update(is_pub=True)
 
     def unmake_published(self, request, queryset):
-        rows_updated = queryset.update(is_pub=False)
-        self.message_user(request, "%s个分类标记为非公开状态." % rows_updated)  # 向用户反馈信息
+        queryset.update(is_pub=False)
 
     make_published.short_description = '公开'
     unmake_published.short_description = '取消公开'
@@ -92,12 +86,10 @@ class TagAdmin(object):
     list_editable = ('name', 'is_pub')
 
     def make_published(self, request, queryset):
-        rows_updated = queryset.update(is_pub=True)
-        self.message_user(request, "%s个标签标记为公开状态." % rows_updated)  # 向用户反馈信息
+        queryset.update(is_pub=True)
 
     def unmake_published(self, request, queryset):
-        rows_updated = queryset.update(is_pub=False)
-        self.message_user(request, "%s个标签标记为非公开状态." % rows_updated)  # 向用户反馈信息
+        queryset.update(is_pub=False)
 
     make_published.short_description = '公开'
     unmake_published.short_description = '取消公开'
@@ -116,12 +108,10 @@ class AboutAdmin(object):
     list_editable = ('title', 'is_pub', 'views')
 
     def unmake_published(self, request, queryset):
-        rows_updated = queryset.update(is_pub=False)
-        self.message_user(request, "%s篇文章标记为非公开状态." % rows_updated)  # 向用户反馈信息
+        queryset.update(is_pub=False)
 
     def make_published(self, request, queryset):
-        rows_updated = queryset.update(is_pub=True)
-        self.message_user(request, "%s篇文章标记为公开状态." % rows_updated)  # 向用户反馈信息
+        queryset.update(is_pub=True)
 
     unmake_published.short_description = '取消公开'
     make_published.short_description = '公开'
@@ -140,12 +130,10 @@ class FriendSiteAdmin(object):
     list_editable = ('site_url', 'site_name', 'is_pub')
 
     def unmake_published(self, request, queryset):
-        rows_updated = queryset.update(is_pub=False)
-        self.message_user(request, "%s个链接记为非公开状态." % rows_updated)  # 向用户反馈信息
+        queryset.update(is_pub=False)
 
     def make_published(self, request, queryset):
-        rows_updated = queryset.update(is_pub=True)
-        self.message_user(request, "%s个链接标记为公开状态." % rows_updated)  # 向用户反馈信息
+        queryset.update(is_pub=True)
 
     unmake_published.short_description = '取消公开'
     make_published.short_description = '公开'
@@ -177,19 +165,14 @@ class VisitStatisticsAdmin(object):
     def _chart_month(self, obj):
         return obj.created_date.strftime('%B')
 
-    refresh_times = (3, 5, 10)
-
     data_charts = {
         'today_visit': {
             'title': u'访问量趋势图', 'x-field': 'created_date', 'y-field': ('today_visit',),
             'order': ('created_date',),
-            # "option": {
-            #     "series": {"": {"align": "left", "barWidth": 1.0, 'show': True}},
-            # }
         },
 
         "per_month": {
-            'title': u"月平均访问量", "x-field": "_chart_month", "y-field": ("today_visit",),
+            'title': u"月访问量", "x-field": "_chart_month", "y-field": ("today_visit",),
             "option": {
                 "series": {"bars": {"align": "center", "barWidth": 0.8, 'show': True}},
                 "xaxis": {"aggregate": "sum", "mode": "categories"},

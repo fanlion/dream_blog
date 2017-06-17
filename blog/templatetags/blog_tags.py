@@ -15,7 +15,7 @@ def get_recent_posts(num=6):
     :param num: 文章数，默认6
     :return: 
     """
-    return Post.objects.all().filter(is_pub=True).order_by('-create_time').filter(is_pub=True)[:num]
+    return Post.objects.all().filter(is_pub=True).filter(category__is_pub=True).order_by('-create_time')[:num]
 
 
 @register.simple_tag
@@ -24,7 +24,7 @@ def archives():
     自定义标签，实现按月归档
     :return: 
     """
-    return Post.objects.filter(is_pub=True).dates('create_time', 'month', order='DESC')
+    return Post.objects.filter(is_pub=True).filter(category__is_pub=True).dates('create_time', 'month', order='DESC')
 
 
 @register.simple_tag
@@ -52,7 +52,8 @@ def get_recommend_article():
     自定义标签，获取推荐文章列表
     :return: 
     """
-    return Post.objects.filter(is_pub=True).filter(is_recommend=True).filter(is_pub=True).order_by('-create_time')[:6]
+    return Post.objects.filter(is_pub=True).filter(category__is_pub=True).filter(is_recommend=True).order_by(
+        '-create_time')[:6]
 
 
 @register.simple_tag
@@ -72,7 +73,7 @@ def get_article_by_id(pk):
     :param pk: 
     :return: 
     """
-    return Post.objects.filter(is_pub=True).get(pk=pk)
+    return Post.objects.filter(is_pub=True).filter(category__is_pub=True).get(pk=pk)
 
 
 @register.simple_tag

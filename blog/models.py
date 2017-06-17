@@ -168,7 +168,7 @@ class VisitStatistics(models.Model):
     """
      站点运营统计数据，每天的有效访问量，访问ip等 
     """
-    today_visit = models.PositiveIntegerField(default=0, verbose_name='今日访问量')  # 今日访问量
+    today_visit = models.PositiveIntegerField(default=0, verbose_name='访问量')  # 今日访问量
 
     created_date = models.DateField(unique=True, editable=True, verbose_name='日期')  # 日期
 
