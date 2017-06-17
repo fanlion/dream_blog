@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'ckeditor',
     'ckeditor_uploader',
+    'haystack',
 ]
 
 MIDDLEWARE = [
@@ -160,3 +161,13 @@ CKEDITOR_CONFIGS = {
         'toolbar': 'Basic',
     },
 }
+
+# 搜索引擎
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'blog.whoosh_cn_backend.WhooshEngine',
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    },
+}
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 1  # 搜索结果分页
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'  # 指定什么时候更新索引, 每当有文章更新时就更新

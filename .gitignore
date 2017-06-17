@@ -3,6 +3,7 @@
 venv/
 staicfile/
 media/
+whoosh_index
 *.pyc
 db.sqlite3
 *.swp

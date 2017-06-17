@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^all/rss/$', AllPostRssFeed(), name='rss'),
+    url(r'^search/', include('haystack.urls')),
 ]
 
 #  给UEditor设置

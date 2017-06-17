@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+{% load blog_tags %}
+{% load highlight %}
+
+{% block main %}
+    {% if query %}
+        {% for result in page.object_list %}
+            <article class="post post-{{ result.object.pk }}">
+                <header class="entry-header">
+                    <h1 class="entry-title">
+                        <a href="{{ result.object.get_absolute_url }}">{{ result.object.title }}</a>
+                    </h1>
+                    <div class="entry-meta">
+                    <span class="post-category"><a
+                            href="{% url 'blog:category' result.object.category.pk %}">{{ result.object.category.name }}</a></span>
+                        {% if result.object.is_original %}
+                            <span class="post-category"><a href="#">原创</a></span>
+                        {% else %}
+                            <span class="post-category"><a href="#">非原创</a></span>
+                        {% endif %}
+                        <span class="post-author"><a href="#">{{ result.object.body | wordcount }}字</a></span>
+                        <span class="post-date"><a
+                                href="{% url 'blog:archives' result.object.create_time.year result.object.create_time.month %}"><time
+                                class="entry-date"
+                                datetime="{{ result.object.create_time }}">{{ result.object.create_time }}</time></a></span>
+                        <span class="post-author"><a href="#">{{ result.object.author }}</a></span>
+                        <span class="comments-link"><a href="#">{{ result.object.comment_list.count }} 评论</a></span>
+                        <span class="views-count"><a href="#">{{ result.object.views }} 阅读</a></span>
+                    </div>
+                </header>
+                <div class="entry-content clearfix">
+                    <p>{% highlight result.object.body with query %}...</p>
+                    <div class="read-more cl-effect-14">
+                        <a href="{{ result.object.get_absolute_url }}" class="more-link">More <span
+                                class="meta-nav">-&gt;</span></a>
+                    </div>
+                </div>
+            </article>
+        {% empty %}
+            <div class="no-post">没有搜索到你想要的结果！</div>
+        {% endfor %}
+        {% if page.has_previous or page.has_next %}
+            <div>
+                <ul class="pager">
+                    {% if page.has_previous %}
+                        <li><a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}上一页
+                    {% if page.has_previous %}</a></li>{% endif %}
+                    |
+                    {% if page.has_next %}
+                        <li><a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}下一页
+                    {% if page.has_next %}</a>{% endif %}
+                </ul>
+            </div>
+        {% endif %}
+    {% else %}
+        请输入搜索关键词，例如 django
+    {% endif %}
+
+
+    {% if is_paginated %}
+        <div>
+            <ul class="pagination">
+                {% if first %}
+                    <li><a href="?page=1">1</a></li>
+                {% endif %}
+
+                {% if left %}
+                    {% if left_has_more %}
+                        <li><a href="#">...</a></li>
+                    {% endif %}
+                    {% for i in left %}
+                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endfor %}
+                {% endif %}
+
+                <li class="active"><a href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+
+                {% if right %}
+                    {% if right_has_more %}
+                        <li><a href="#">...</a></li>
+                    {% endif %}
+                    {% for i in right %}
+                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endfor %}
+
+                {% endif %}
+
+                {% if last %}
+                    <li><a href="?page={{ paginator.num_pages }}">{{ paginator.num_pages }}</a></li>
+                {% endif %}
+
+            </ul>
+        </div>
+    {% endif %}
+
+{% endblock main %}
+
+{% block recommend %}
+    <div class="widget widget-recent-posts">
+        <h3 class="widget-title">推荐文章</h3>
+        {% get_recommend_article as recommend_list %}
+        <ul>
+            {% for post in recommend_list %}
+                <li>
+                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                </li>
+            {% empty %}
+                暂无推荐
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block recent_comment %}
+    <div class="widget widget-recent-posts">
+        <h3 class="widget-title">最新评论文章</h3>
+        {% get_recent_comments as coments %}
+        <ul>
+            {% for comment in coments %}
+                {% get_article_by_id comment.post_id as article %}
+                <li>
+                    <strong>{{ comment.name }}</strong>在 <a style="color: darkorchid;"
+                                                            href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+                    <strong>评论了</strong>
+                    {{ comment.text | truncatechars:10 }} ...
+                </li>
+            {% empty %}
+                暂无文章
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block tag_cloud %}
+    <div class="widget widget-tag-cloud">
+        <h3 class="widget-title">标签云</h3>
+        {% get_tags as tags %}
+        <ul>
+            {% for tag in tags %}
+                <li>
+                    <a href="{% url 'blog:tag' tag.pk %}">{{ tag.name }}<span
+                            class="post-count">({{ tag.num_posts }})</span></a>
+                </li>
+            {% empty %}
+                暂无文章
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block category %}
+    <div class="widget widget-category">
+        <h3 class="widget-title">分类</h3>
+        {% get_categories as category_list %}
+        <ul>
+            {% for category in category_list %}
+                <li>
+                    <a href="{% url 'blog:category' category.pk %}">{{ category.name }}<span
+                            class="post-count">({{ category.num_posts }})</span></a>
+                </li>
+            {% empty %}
+                暂无分类
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block recent_article %}
+    <div class="widget widget-recent-posts">
+        <h3 class="widget-title">最新文章</h3>
+        {% get_recent_posts as recent_post_list %}
+        <ul>
+            {% for post in recent_post_list %}
+                <li>
+                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                </li>
+            {% empty %}
+                暂无文章
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block archives %}
+    <div class="widget widget-archives">
+        <h3 class="widget-title">归档</h3>
+        {% archives as date_list %}
+        <ul>
+            {% for date in date_list %}
+                <li>
+                    <a href="{% url 'blog:archives' date.year date.month %}">{{ date.year }}年{{ date.month }}月</a>
+                </li>
+            {% empty %}
+                暂无归档
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block friend_sites %}
+    <div class="widget widget-archives">
+        <h3 class="widget-title">友情链接</h3>
+        {% get_friend_sites as friend_site_list %}
+        <ul>
+            {% for site in friend_site_list %}
+                <li>
+                    <a href="{{ site.site_url }}">{{ site.site_name | truncatechars:20 }}</a>
+                </li>
+            {% empty %}
+                暂无友情链接
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block rss %}
+    <div class="rss">
+        <a href="{% url 'rss' %}"><span class="ion-social-rss-outline"></span> RSS 订阅</a>
+    </div>
+{% endblock %}
