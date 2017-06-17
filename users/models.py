@@ -6,7 +6,7 @@ class User(AbstractUser):
     """
     在django的用户模型上扩展自定义User
     """
-    nickname = models.CharField(max_length=50, blank=False, null=False, verbose_name='昵称')  # 昵称，GitHub的用户名
+    nickname = models.CharField(max_length=50, blank=False, null=False, unique=True, verbose_name='昵称')  # 昵称，GitHub的用户名
     url = models.URLField(max_length=255, blank=True, verbose_name='个人主页')  # 个人主页
     photo = models.URLField(max_length=255, blank=True, verbose_name='头像')  # 头像
 
@@ -14,5 +14,5 @@ class User(AbstractUser):
         verbose_name = '用户'
         verbose_name_plural = verbose_name
 
-    def __str__(self):
-        return self.nickname
+        def __str__(self):
+            return self.nickname

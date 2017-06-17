@@ -1,5 +1,5 @@
 import xadmin
-from .models import Post, Category, Tag, About, FriendSite, VisitRecord, VisitStatistics
+from .models import Post, Category, Tag, About, FriendSite, VisitRecord, VisitStatistics, BlackList
 from xadmin import views
 
 # 管理界面每页展示多少条目
@@ -182,6 +182,26 @@ class VisitStatisticsAdmin(object):
     }
 
 
+class BlackListAdmin(object):
+    """
+    黑名单管理
+    """
+    list_display = ('ip', 'created_time', 'deny_reason')
+    list_per_page = LIST_PER_PAGE
+    search_fields = ['ip']
+    model_icon = 'fa fa-lock'
+    list_filter = ['created_time', 'ip', 'deny_reason']
+
+    def unmake_deny(self, request, queryset):
+        queryset.update(is_pub=False)
+
+    def make_deny(self, request, queryset):
+        queryset.update(is_pub=True)
+
+    unmake_deny.short_description = '解除禁止'
+    make_deny.short_description = '禁止访问'
+    actions = [unmake_deny, make_deny]
+
 xadmin.site.register(Post, PostAdmin)
 xadmin.site.register(Category, CategoryAdmin)
 xadmin.site.register(Tag, TagAdmin)
@@ -189,3 +209,4 @@ xadmin.site.register(About, AboutAdmin)
 xadmin.site.register(FriendSite, FriendSiteAdmin)
 xadmin.site.register(VisitRecord, VisitRecordAdmin)
 xadmin.site.register(VisitStatistics, VisitStatisticsAdmin)
+xadmin.site.register(BlackList, BlackListAdmin)

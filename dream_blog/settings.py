@@ -169,5 +169,5 @@ HAYSTACK_CONNECTIONS = {
         'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
     },
 }
-HAYSTACK_SEARCH_RESULTS_PER_PAGE = 1  # 搜索结果分页
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 12  # 搜索结果分页
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'  # 指定什么时候更新索引, 每当有文章更新时就更新

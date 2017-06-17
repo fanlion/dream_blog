@@ -208,6 +208,7 @@ def about(request):
 def search(request):
     """
     全文搜索
+    目前弃用 2017年6月17日16:11:15
     :param request:  
     :return: 
     """

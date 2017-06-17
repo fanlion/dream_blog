@@ -178,3 +178,29 @@ class VisitStatistics(models.Model):
 
     def __str__(self):
         return "%s 访问量" % self.created_date.strftime('%Y-%m-%d')
+
+
+@python_2_unicode_compatible
+class BlackList(models.Model):
+    """
+    黑名单，可以记录危险操作的ip，并可选择禁止访问
+    """
+
+    # 拒绝原因
+    DENY_REASON_CHOICES = (
+        ('1', '爬虫'),
+        ('2', '破解密码'),
+        ('3', '不友好用户'),
+    )
+    ip = models.CharField(max_length=20, verbose_name='ip地址')
+    is_disable = models.BooleanField(default=True, verbose_name='是否禁止')  # 是否禁止访问，默认禁止访问
+    created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    modified_time = models.DateTimeField(null=True, verbose_name='修改时间')
+    deny_reason = models.CharField(max_length=20, choices=DENY_REASON_CHOICES, default='1', verbose_name='禁止原因')  # 拒绝原因
+
+    class Meta:
+        verbose_name = '黑名单'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.ip
