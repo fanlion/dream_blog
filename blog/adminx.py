@@ -186,17 +186,18 @@ class BlackListAdmin(object):
     """
     黑名单管理
     """
-    list_display = ('ip', 'created_time', 'deny_reason')
+    list_display = ('ip', 'created_time', 'is_disable','deny_reason')
     list_per_page = LIST_PER_PAGE
     search_fields = ['ip']
     model_icon = 'fa fa-lock'
-    list_filter = ['created_time', 'ip', 'deny_reason']
+    list_filter = ['created_time', 'ip', 'deny_reason', 'is_disable']
+    list_editable = ('is_disable', 'deny_reason')
 
     def unmake_deny(self, request, queryset):
-        queryset.update(is_pub=False)
+        queryset.update(is_disable=False)
 
     def make_deny(self, request, queryset):
-        queryset.update(is_pub=True)
+        queryset.update(is_disable=True)
 
     unmake_deny.short_description = '解除禁止'
     make_deny.short_description = '禁止访问'

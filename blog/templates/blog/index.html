@@ -22,7 +22,7 @@
                             class="entry-date"
                             datetime="{{ post.create_time }}">{{ post.create_time }}</time></a></span>
                     <span class="post-author"><a href="#">{{ post.author }}</a></span>
-                    <span class="comments-link"><a href="#">{{ post.comment_list.count }} 评论</a></span>
+                    {#                    <span class="comments-link"><a href="#">{{ post.comment_list.count }} 评论</a></span>#}
                     <span class="views-count"><a href="#">{{ post.views }} 阅读</a></span>
                 </div>
             </header>
@@ -93,25 +93,24 @@
     </div>
 {% endblock %}
 
-{% block recent_comment %}
-    <div class="widget widget-recent-posts">
-        <h3 class="widget-title">最新评论文章</h3>
-        {% get_recent_comments as coments %}
-        <ul>
-            {% for comment in coments %}
-                {% get_article_by_id comment.post_id as article %}
-                <li>
-                    <strong>{{ comment.name }}</strong>在 <a style="color: darkorchid;"
-                                                            href="{{ article.get_absolute_url }}">{{ article.title }}</a>
-                    <strong>评论了</strong>
-                    {{ comment.text | truncatechars:10 }} ...
-                </li>
-            {% empty %}
-                暂无文章
-            {% endfor %}
-        </ul>
-    </div>
-{% endblock %}
+{#{% block recent_comment %}#}
+{#    <div class="widget widget-recent-posts">#}
+        {#        {% get_recent_comments as coments %}#}
+        {#        <ul>#}
+        {#            {% for comment in coments %}#}
+        {#                {% get_article_by_id comment.post_id as article %}#}
+        {#                <li>#}
+        {#                    <strong>{{ comment.name }}</strong>在 <a style="color: darkorchid;"#}
+        {#                                                            href="{{ article.get_absolute_url }}">{{ article.title }}</a>#}
+        {#                    <strong>评论了</strong>#}
+        {#                    {{ comment.text | truncatechars:10 }} ...#}
+        {#                </li>#}
+        {#            {% empty %}#}
+        {#                暂无文章#}
+        {#            {% endfor %}#}
+        {#        </ul>#}
+{#    </div>#}
+{#{% endblock %}#}
 
 {% block tag_cloud %}
     <div class="widget widget-tag-cloud">

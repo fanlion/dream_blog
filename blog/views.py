@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
 from .models import Post, Category, Tag, About
@@ -66,7 +67,19 @@ def detail(request, pk):
         raise Http404('访问的页面不存在')
 
 
-# @cache_page(60 * 30)
+@login_required
+def preview(request, pk):
+    """
+    文章详情
+    :param request: 
+    :param pk: 文章id
+    :return: 
+    """
+    post = get_object_or_404(Post, pk=pk)
+
+    return render(request, 'blog/detail.html', {'post': post})  # @cache_page(60 * 30)
+
+
 def archives(request, year, month):
     """
      归档视图，按日期（年，月）对文章进行归档

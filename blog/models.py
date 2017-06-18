@@ -192,7 +192,7 @@ class BlackList(models.Model):
         ('2', '破解密码'),
         ('3', '不友好用户'),
     )
-    ip = models.CharField(max_length=20, verbose_name='ip地址')
+    ip = models.CharField(max_length=20, unique=True, verbose_name='ip地址')
     is_disable = models.BooleanField(default=True, verbose_name='是否禁止')  # 是否禁止访问，默认禁止访问
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     modified_time = models.DateTimeField(null=True, verbose_name='修改时间')

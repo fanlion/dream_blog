@@ -2,9 +2,12 @@
 Blog 的中间件，包括访问统计中间件
 """
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponseForbidden
 from django.utils.deprecation import MiddlewareMixin
-from blog.models import VisitRecord, VisitStatistics
+from blog.models import VisitRecord, VisitStatistics, BlackList
 from django.utils import timezone
+
+DENY_VISIT_COUNT_THRESHOLD = 3000  # 同一次访问限制次数
 
 
 class VisitRecordMiddleWare(MiddlewareMixin):
@@ -64,9 +67,57 @@ class VisitStatisticsMiddleWare(MiddlewareMixin):
                 visit.save()
 
 
-class AntiSpiderMiddleWare(MiddlewareMixin):
+class BlackListMiddleWare(MiddlewareMixin):
     """
-    反爬虫中间件
+    黑名单中间件
     """
-    pass
-    # TODO 反爬虫中间件 2017年6月16日11:39:35
+    def __init__(self, get_response=None):
+        self.get_response = get_response
+
+    def process_request(self, request):
+
+        remote_ip = request.META['REMOTE_ADDR']  # 访问者的ip
+
+        black_list = BlackList.objects.filter(is_disable=True).values_list('ip', flat=True)
+        if remote_ip in black_list:
+            return HttpResponseForbidden()
+
+        # 如果访问者ip还存在session中，则表明还是同一次访问,不计入访问量
+        if remote_ip not in request.session:
+            request.session[remote_ip] = 1
+        else:
+            request.session[remote_ip] = int(request.session[remote_ip]) + 1
+            if int(request.session[remote_ip]) > DENY_VISIT_COUNT_THRESHOLD:
+
+                request_path = request.path_info  # 请求路径
+
+                deny_reason = '1' # 默认爬虫 deny_reason 1爬虫，2破解密码，3不友好用户
+
+                # 如果访问记录是管理员后台,可考虑破解密码
+                if 'xadmin' in request_path:
+                    deny_reason = '2'
+
+                try:
+                    # 如果记录存在则更新
+                    visit = BlackList.objects.get(ip=remote_ip)
+                    visit.deny_reason = deny_reason
+                    visit.modified_time = timezone.now()
+                    visit.is_disable = True
+                    visit.save()
+                except ObjectDoesNotExist:
+                    # 如果该记录不存在则新建
+                    visit = BlackList()
+                    visit.deny_reason = deny_reason
+                    visit.ip = remote_ip
+                    visit.created_time = timezone.now()
+                    visit.is_disable = True
+                    visit.save()
+                # 禁止访问
+                return HttpResponseForbidden()
+
+
+
+
+
+
+

@@ -1,3 +1,5 @@
+import json
+
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
@@ -10,4 +12,4 @@ def neteasy_comment_callback(request):
     comm = CommentTest(data=data)
     comm.save()
     print(data)
-    return HttpResponse()
+    return HttpResponse(status=200)

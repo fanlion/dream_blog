@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import logging
+import django.utils.log
+import logging.handlers
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -59,6 +62,8 @@ MIDDLEWARE = [
 
     'blog.middleware.VisitStatisticsMiddleWare',
     'blog.middleware.VisitRecordMiddleWare',
+    'blog.middleware.BlackListMiddleWare',
+
 ]
 
 ROOT_URLCONF = 'dream_blog.urls'
