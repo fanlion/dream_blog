@@ -28,7 +28,7 @@ class VisitRecordMiddleWare(MiddlewareMixin):
 
             visit_record.http_host = request.META.get('HTTP_HOST')
             visit_record.http_user_agent = request.META.get('HTTP_USER_AGENT')
-            visit_record.ip = request.META.get('REMOTE_ADDR')
+            visit_record.ip = str(request.META.get('REMOTE_ADDR'))
             visit_record.server_name = request.META.get('SERVER_NAME')
             visit_record.http_path = request.path_info
 
@@ -71,6 +71,7 @@ class BlackListMiddleWare(MiddlewareMixin):
     """
     黑名单中间件
     """
+
     def __init__(self, get_response=None):
         self.get_response = get_response
 
@@ -91,7 +92,7 @@ class BlackListMiddleWare(MiddlewareMixin):
 
                 request_path = request.path_info  # 请求路径
 
-                deny_reason = '1' # 默认爬虫 deny_reason 1爬虫，2破解密码，3不友好用户
+                deny_reason = '1'  # 默认爬虫 deny_reason 1爬虫，2破解密码，3不友好用户
 
                 # 如果访问记录是管理员后台,可考虑破解密码
                 if 'xadmin' in request_path:
@@ -116,8 +117,20 @@ class BlackListMiddleWare(MiddlewareMixin):
                 return HttpResponseForbidden()
 
 
+class MultipleProxyMiddleware(MiddlewareMixin):
+    FORWARDED_FOR_FIELDS = [
+        'HTTP_X_FORWARDED_FOR',
+        'HTTP_X_FORWARDED_HOST',
+        'HTTP_X_FORWARDED_SERVER',
+    ]
 
-
-
-
-
+    def process_request(self, request):
+        """
+        Rewrites the proxy headers so that only the most
+        recent proxy is used.
+        """
+        for field in self.FORWARDED_FOR_FIELDS:
+            if field in request.META:
+                if ',' in request.META[field]:
+                    parts = request.META[field].split(',')
+                    request.META[field] = parts[-1].strip()

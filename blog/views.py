@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
+from django.views.decorators.cache import cache_page
+
 from .models import Post, Category, Tag, About
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
@@ -215,6 +217,7 @@ def about(request):
     # 如果有多篇文章
     if post and len(post) >= 1:
         post = post[0]
+        post.increase_views()
     return render(request, 'blog/about.html', {'post': post})
 
 

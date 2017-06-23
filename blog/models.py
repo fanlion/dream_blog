@@ -14,8 +14,8 @@ class Category(models.Model):
     name = models.CharField(max_length=60, verbose_name='分类')  # 分类名称
     is_pub = models.BooleanField(default=True, verbose_name='是否公开')  # 是否公开
 
-    created_time = models.DateTimeField(auto_now_add=True, editable=True, verbose_name='创建日期')  # 创建日期
-    modified_time = models.DateTimeField(auto_now=True, editable=True, null=True, verbose_name='修改日期')  # 修改日期
+    created_time = models.DateTimeField(verbose_name='创建日期')  # 创建日期
+    modified_time = models.DateTimeField(null=True, verbose_name='修改日期')  # 修改日期
 
     class Meta:
         verbose_name = '分类'
@@ -149,7 +149,7 @@ class VisitRecord(models.Model):
     游客访问记录 
     """
     http_host = models.CharField(max_length=30, verbose_name='host')  # HTTP_HOST
-    http_path = models.CharField(max_length=40, verbose_name='path')  # 访问链接
+    http_path = models.CharField(max_length=500, verbose_name='path')  # 访问链接
     http_user_agent = models.CharField(max_length=350, verbose_name='agent')  # 客户端的user-agent字符串
     ip = models.CharField(max_length=20, verbose_name='ip')  # 客户端的IP地址
     server_name = models.CharField(max_length=10, verbose_name='server_name')  # 服务器的主机名

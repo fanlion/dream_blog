@@ -94,7 +94,7 @@
                                     href="{% url 'blog:archives' post.create_time.year post.create_time.month %}"><time
                                     class="entry-date"
                                     datetime="{{ post.create_time }}">{{ post.create_time }}</time></a></span>
-                            <span class="post-author"><a href="#">{{ post.author }}</a></span>
+                            <span class="post-author"><a href="#">{{ post.author.nickname }}</a></span>
 {#                            <span class="comments-link"><a href="#">{{ comment_list.count }} 评论</a></span>#}
                             <span class="views-count"><a href="#">{{ post.views }} 阅读</a></span>
                         </div>

@@ -26,10 +26,10 @@ SECRET_KEY = 'j#c9ugj8d_+d-ysrc8z)54j&61%1v-@+(96hzvpzqu9%+2cku^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-# DEBUG = False
-# ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'vanblog.cn']
-DEBUG = True
-ALLOWED_HOSTS = []
+DEBUG = False
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.vanblog.cn']
+# DEBUG = True
+# ALLOWED_HOSTS = ['127.0.0.1']
 
 # Application definition
 
@@ -145,10 +145,11 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # 浏览器关闭时会话过期
 STATIC_URL = '/static/'
 
 # 公共静态文件
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static_common'),)
 
 # 部署阶段静态文件收集路径
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfile')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -176,3 +177,50 @@ HAYSTACK_CONNECTIONS = {
 }
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 12  # 搜索结果分页
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'  # 指定什么时候更新索引, 每当有文章更新时就更新
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },  # 针对 DEBUG = True 的情况
+    },
+    'formatters': {
+        'standard': {
+            'format': '%(levelname)s %(asctime)s %(pathname)s %(filename)s %(module)s %(funcName)s %(lineno)d: %(message)s'
+        },  # 对日志信息进行格式化，每个字段对应了日志格式中的一个字段，更多字段参考官网文档，我认为这些字段比较合适，输出类似于下面的内容
+        # INFO 2016-09-03 16:25:20,067 /home/ubuntu/mysite/views.py views.py views get 29: some info...
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'formatter': 'standard'
+        },
+        'file_handler': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': './logs/vanblog.log',
+            'formatter': 'standard'
+        },  # 用于文件输出
+        'console': {
+            'level': 'INFO',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file_handler', 'console'],
+            'level': 'DEBUG',
+            'propagate': True  # 是否继承父类的log信息
+        },  # handlers 来自于上面的 handlers 定义的内容
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+    }
+}
