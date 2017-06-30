@@ -1,9 +1,9 @@
 import xadmin
-from .models import Post, Category, Tag, About, FriendSite, VisitRecord, VisitStatistics, BlackList
+from .models import Post, Category, Tag, About, FriendSite, VisitRecord, VisitStatistics, BlackList, Contact
 from xadmin import views
 
 # 管理界面每页展示多少条目
-LIST_PER_PAGE = 10
+LIST_PER_PAGE = 20
 
 
 @xadmin.sites.register(views.BaseAdminView)
@@ -203,6 +203,28 @@ class BlackListAdmin(object):
     make_deny.short_description = '禁止访问'
     actions = [unmake_deny, make_deny]
 
+
+class ContactAdmin(object):
+    """
+    留言管理
+    """
+    list_display = ('name', 'email', 'created_time', 'is_check')
+    list_per_page = LIST_PER_PAGE
+    search_fields = ['name']
+    model_icon = 'fa fa-lock'
+    list_filter = ['created_time', 'is_check']
+    list_editable = ('is_check',)
+
+    def unmake_check(self, request, queryset):
+        queryset.update(is_disable=False)
+
+    def make_check(self, request, queryset):
+        queryset.update(is_disable=True)
+
+    unmake_check.short_description = '未读'
+    make_check.short_description = '已读'
+    actions = [unmake_check, make_check]
+
 xadmin.site.register(Post, PostAdmin)
 xadmin.site.register(Category, CategoryAdmin)
 xadmin.site.register(Tag, TagAdmin)
@@ -211,3 +233,5 @@ xadmin.site.register(FriendSite, FriendSiteAdmin)
 xadmin.site.register(VisitRecord, VisitRecordAdmin)
 xadmin.site.register(VisitStatistics, VisitStatisticsAdmin)
 xadmin.site.register(BlackList, BlackListAdmin)
+
+xadmin.site.register(Contact, ContactAdmin)

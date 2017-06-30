@@ -1,12 +1,12 @@
 from django.contrib.auth.decorators import login_required
-from django.http import Http404, HttpResponseForbidden
-from django.shortcuts import render, get_object_or_404
-from django.views.decorators.cache import cache_page
-
-from .models import Post, Category, Tag, About
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
-from .utils import PaginationBlogPost
+from django.http import Http404, HttpResponseForbidden, HttpResponse
+from django.shortcuts import render, get_object_or_404
+
+from blog.forms import ContactForm
+from .models import Post, Category, Tag, About, Contact
+from .utils.page_helper import PaginationBlogPost
 
 PAGE_SIZE = 12  # 每页显示文章的数量
 
@@ -218,6 +218,65 @@ def about(request):
     if post and len(post) >= 1:
         post = post[0]
         post.increase_views()
+    return render(request, 'blog/about.html', {'post': post})
+
+
+def contact(request):
+    """
+    留言视图
+    :param request: 
+    :return: 
+    """
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            subject = form.cleaned_data['subject']
+            content = form.cleaned_data['content']
+            verify_code = form.cleaned_data['check_code']  # 表单中的验证码
+
+            correct_code = request.session.get('CheckCode', None)
+
+            if correct_code and verify_code.upper() == correct_code.upper():
+                cont = Contact(name=name, email=email, subject=subject, content=content)
+                cont.save()
+                print(name, email, subject, content, verify_code)
+                return HttpResponse('提交成功')
+    else:
+        form = ContactForm()
+    return render(request, 'blog/contact.html', {'form': form})
+
+
+def check_code(request):
+    """
+    验证码
+    :param request: 
+    :return: 
+    """
+    import io
+    from blog.utils import check_code as CheckCode
+
+    stream = io.BytesIO()
+    # img图片对象，code在图像中写的内容
+    img, code = CheckCode.create_validate_code()
+    img.save(stream, 'png')
+    # 图片页面中显示，验证码存入session
+    request.session['CheckCode'] = code
+    return HttpResponse(stream.getvalue())
+
+
+@login_required
+def preview_about(request):
+    """
+    关于我 预览 视图,只允许管理员查看
+    :param request: 
+    :return: 
+    """
+    post = About.objects.order_by('created_time')  # 只能有一篇文章发布
+    # 如果有多篇文章
+    if post and len(post) >= 1:
+        post = post[0]
     return render(request, 'blog/about.html', {'post': post})
 
 

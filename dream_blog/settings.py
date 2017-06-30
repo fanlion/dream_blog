@@ -21,18 +21,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'j#c9ugj8d_+d-ysrc8z)54j&61%1v-@+(96hzvpzqu9%+2cku^'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.vanblog.cn']
-# DEBUG = True
-# ALLOWED_HOSTS = ['127.0.0.1']
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -60,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
+    'blog.middleware.MultipleProxyMiddleware',
     'blog.middleware.VisitStatisticsMiddleWare',
     'blog.middleware.VisitRecordMiddleWare',
     'blog.middleware.BlackListMiddleWare',
@@ -175,10 +170,15 @@ HAYSTACK_CONNECTIONS = {
         'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
     },
 }
-HAYSTACK_SEARCH_RESULTS_PER_PAGE = 12  # 搜索结果分页
-HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'  # 指定什么时候更新索引, 每当有文章更新时就更新
 
-LOGGING = {
+# 搜索结果分页
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 12
+
+# 指定什么时候更新索引, 每当有文章更新时就更新
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+# 日志配置
+LOGGING__ = {
     'version': 1,
     'disable_existing_loggers': False,
     'filters': {
@@ -189,7 +189,8 @@ LOGGING = {
     'formatters': {
         'standard': {
             'format': '%(levelname)s %(asctime)s %(pathname)s %(filename)s %(module)s %(funcName)s %(lineno)d: %(message)s'
-        },  # 对日志信息进行格式化，每个字段对应了日志格式中的一个字段，更多字段参考官网文档，我认为这些字段比较合适，输出类似于下面的内容
+        },
+        # 对日志信息进行格式化，每个字段对应了日志格式中的一个字段，更多字段参考官网文档，我认为这些字段比较合适，输出类似于下面的内容
         # INFO 2016-09-03 16:25:20,067 /home/ubuntu/mysite/views.py views.py views get 29: some info...
     },
     'handlers': {

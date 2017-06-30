@@ -152,7 +152,7 @@ class VisitRecord(models.Model):
     http_path = models.CharField(max_length=500, verbose_name='path')  # 访问链接
     http_user_agent = models.CharField(max_length=350, verbose_name='agent')  # 客户端的user-agent字符串
     ip = models.CharField(max_length=20, verbose_name='ip')  # 客户端的IP地址
-    server_name = models.CharField(max_length=10, verbose_name='server_name')  # 服务器的主机名
+    server_name = models.CharField(max_length=40, verbose_name='server_name')  # 服务器的主机名
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='请求时间')  # 访问时间
 
     class Meta:
@@ -204,3 +204,25 @@ class BlackList(models.Model):
 
     def __str__(self):
         return self.ip
+
+
+@python_2_unicode_compatible
+class Contact(models.Model):
+    """
+    游客留言
+    """
+    name = models.CharField(max_length=10, verbose_name='昵称')
+    email = models.EmailField(verbose_name='邮箱')
+    subject = models.TextField(max_length=100, verbose_name='主题')
+    content = models.TextField(max_length=400, verbose_name='内容')
+
+    is_check = models.BooleanField(default=False, verbose_name='是否已读')
+
+    created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建日期')
+
+    class Meta:
+        verbose_name = '留言'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
