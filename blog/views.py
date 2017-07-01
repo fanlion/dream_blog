@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
-from django.http import Http404, HttpResponseForbidden, HttpResponse
+from django.http import Http404, HttpResponseForbidden, HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404
 
 from blog.forms import ContactForm
@@ -227,6 +227,7 @@ def contact(request):
     :param request: 
     :return: 
     """
+    # 表单提交时
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
@@ -241,8 +242,14 @@ def contact(request):
             if correct_code and verify_code.upper() == correct_code.upper():
                 cont = Contact(name=name, email=email, subject=subject, content=content)
                 cont.save()
-                print(name, email, subject, content, verify_code)
-                return HttpResponse('提交成功')
+                result = {'result': '我已经收到你的消息了，我会尽快查看消息！'}
+                return JsonResponse(result)
+            else:
+                result = {'result': '验证码错误, 请重新填写!'}
+                return JsonResponse(result)
+        else:
+            return JsonResponse({'result': '服务器异常，请稍后重试'})
+    # get请求页面时
     else:
         form = ContactForm()
     return render(request, 'blog/contact.html', {'form': form})
@@ -251,8 +258,8 @@ def contact(request):
 def check_code(request):
     """
     验证码
-    :param request: 
-    :return: 
+    :param request:
+    :return:
     """
     import io
     from blog.utils import check_code as CheckCode
@@ -270,8 +277,8 @@ def check_code(request):
 def preview_about(request):
     """
     关于我 预览 视图,只允许管理员查看
-    :param request: 
-    :return: 
+    :param request:
+    :return:
     """
     post = About.objects.order_by('created_time')  # 只能有一篇文章发布
     # 如果有多篇文章
@@ -284,8 +291,8 @@ def search(request):
     """
     全文搜索
     目前弃用 2017年6月17日16:11:15
-    :param request:  
-    :return: 
+    :param request:
+    :return:
     """
     q = request.GET.get('q')
     error_msg = ''

@@ -13,6 +13,7 @@
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://cdn.bootcss.com/jquery.form/3.37.0/jquery.form.min.js"></script>
 
     <!-- css -->
     {#    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">#}
@@ -74,7 +75,7 @@
                 <article class="post">
                     <div class="entry-content clearfix">
 
-                        <form action="#" method="post" class="contact-form">
+                        <form action="{% url 'blog:contact' %}" method="post" class="contact-form" id="contact">
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-md-6 col-md-offset-3">
@@ -87,14 +88,14 @@
                                     <label for="{{ form.subject.id_for_label }}">留言主题</label>
                                     {{ form.subject }}
                                     {{ form.subject.errors }}
-                                    <label for="{{ form.content.id_for_label }}">正式内容</label>
+                                    <label for="{{ form.content.id_for_label }}">留言内容</label>
                                     {{ form.content }}
                                     {{ form.content.errors }}
                                     <label for="{{ form.check_code.id_for_label }}">验证码</label>
-                                    <img src="{% url 'blog:check_code' %}" onclick="ChangeCode(this)">
+                                    <img id="check_code" src="{% url 'blog:check_code' %}" onclick="ChangeCode(this)">
                                     {{ form.check_code }}
                                     {{ form.check_code.errors }}
-                                    <button class="btn-send btn-5 btn-5b">提交</button>
+                                    <button class="btn-send btn-5 btn-5b" type="submit">提交</button>
                                 </div>
                             </div>    <!-- row -->
                         </form>
@@ -135,12 +136,62 @@
     </nav>
 </div>
 
-<script src="{% static 'blog/js/script.js' %}"></script>
-<script>
-    function ChangeCode(ths) {
-        ths.src += '?'
-    }
-</script>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    消息
+                </h4>
+            </div>
+            <div class="modal-body" id="result">
+                提示消息
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+
+    <script src="{% static 'blog/js/script.js' %}"></script>
+    <script>
+        function ChangeCode(ths) {
+
+            var new_url = $('#check_code').attr('src').split('?')[0] + '?' + Math.random();
+            ths.src = new_url;
+        };
+
+        $(document).ready(function () {
+
+            $('#contact').submit(function () {
+                var options = {
+                    type: 'post',
+                    dataType: 'json',
+                    success: afterSubmit
+                };
+
+                function afterSubmit(responseText) {
+                    // 模态框消息
+                    $('#result').text(responseText.result);
+                    // 展示模态框
+                    $('#myModal').modal({
+                        keyboard: true
+                    });
+                    var new_url = $('#check_code').attr('src').split('?')[0] + '?' + Math.random();
+                    $('#check_code').attr('src', new_url);
+                }
+
+                $(this).ajaxSubmit(options);
+                return false; // 阻止默认表单提交
+            });
+
+        });
+    </script>
 
 </body>
 </html>
