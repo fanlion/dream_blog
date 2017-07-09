@@ -9,21 +9,21 @@
                     <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
                 </h1>
                 <div class="entry-meta">
-                    <span class="post-category"><a
+                    <span class="post-category"><a class="fa fa-tag"
                             href="{% url 'blog:category' post.category.pk %}">{{ post.category.name }}</a></span>
                     {% if post.is_original %}
-                        <span class="post-category"><a href="#">原创</a></span>
+                        <span class="post-category"><a href="#" class="fa fa-apple">原创</a></span>
                     {% else %}
-                        <span class="post-category"><a href="#">非原创</a></span>
+                        <span class="post-category"><a href="#" class="fa fa-apple">非原创</a></span>
                     {% endif %}
-                    <span class="post-author"><a href="#">{{ post.body | wordcount }}字</a></span>
-                    <span class="post-date"><a
+                    <span class="post-author"><a href="#" class="fa fa-pencil">{{ post.body | wordcount }}字</a></span>
+                    <span class="post-date"><a class="fa fa-calendar"
                             href="{% url 'blog:archives' post.create_time.year post.create_time.month %}"><time
                             class="entry-date"
                             datetime="{{ post.create_time }}">{{ post.create_time }}</time></a></span>
-                    <span class="post-author"><a href="#">{{ post.author.nickname }}</a></span>
+                    <span class="post-author"><a href="#" class="fa fa-user">{{ post.author.nickname }}</a></span>
                     {#                    <span class="comments-link"><a href="#">{{ post.comment_list.count }} 评论</a></span>#}
-                    <span class="views-count"><a href="#">{{ post.views }} 阅读</a></span>
+                    <span class="views-count"><a href="#" class="fa fa-eye">{{ post.views }} 阅读</a></span>
                 </div>
             </header>
             <div class="entry-content clearfix">

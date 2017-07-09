@@ -4,8 +4,6 @@
 <html>
 <head>
     <title>VanBlog-{{ post.title }}</title>
-    <link rel="Short Icon" href="{% static 'img/favicon.ico' %}">
-
     <!-- meta -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,18 +15,15 @@
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!-- css -->
-    {#    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">#}
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="{% static 'blog/css/pace.css' %}">
     <link rel="stylesheet" href="{% static 'blog/css/custom.css' %}">
 
     <!-- js -->
-    {#    <script src="{% static 'js/jquery-2.1.3.min.js' %}"></script>#}
-    {#    <script src="{% static 'js/bootstrap.min.js' %}"></script>#}
     <script src="{% static 'blog/js/pace.min.js' %}"></script>
     <script src="{% static 'blog/js/modernizr.custom.js' %}"></script>
 
-    <! -- 百度统计 -->
+    {#    <! -- 百度统计 -->#}
     {#    <script>#}
     {#        var _hmt = _hmt || [];#}
     {#        (function () {#}
@@ -42,8 +37,6 @@
 </head>
 
 <body>
-<!-- 量子效果 -->
-<div id="particle" style="height: 150px;"></div>
 <div class="container">
     <header id="site-header">
         <div class="row">
@@ -95,16 +88,19 @@
                             <a href="{% url 'blog:detail' post.pk %}">{{ post.title }}</a>
                         </h1>
                         <div class="entry-meta">
-                            <span class="post-category"><a
-                                    href="{% url 'blog:category' post.category.pk %}">{{ post.category.name }}</a></span>
+                            <span class="post-category">
+                                <a class="fa fa-tag"
+                                   href="{% url 'blog:category' post.category.pk %}">{{ post.category.name }}
+                                </a>
+                            </span>
 
-                            <span class="post-date"><a
+                            <span class="post-date"><a class="fa fa-calendar"
                                     href="{% url 'blog:archives' post.create_time.year post.create_time.month %}"><time
                                     class="entry-date"
                                     datetime="{{ post.create_time }}">{{ post.create_time }}</time></a></span>
-                            <span class="post-author"><a href="#">{{ post.author.nickname }}</a></span>
+                            <span class="post-author"><a href="#" class="fa fa-user">{{ post.author.nickname }}</a></span>
                             {#                            <span class="comments-link"><a href="#">{{ comment_list.count }} 评论</a></span>#}
-                            <span class="views-count"><a href="#">{{ post.views }} 阅读</a></span>
+                            <span class="views-count"><a href="#" class="fa fa-eye">{{ post.views }} 阅读</a></span>
                         </div>
                     </header>
                     <div class="entry-content clearfix">
@@ -130,31 +126,123 @@
                     <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=2136200"
                             charset="utf-8"></script>
                     <!-- JiaThis Button END -->
-
-
                 </article>
-                {% if post %}
-                    <section class="comment-area" id="comment-area">
-                        <hr>
-                        <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
-                        <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
-                        <script>
-                            var cloudTieConfig = {
-                                url: document.location.href,
-                                sourceId: "",
-                                productKey: "a7081436f6284e8eadab78110909d49d",
-                                target: "cloud-tie-wrapper"
-                            };
-                            var yunManualLoad = true;
-                            Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
-                        </script>
-                    </section>
-                {% endif %}
+
+                <!-- 评论 -->
+                <section class="comment-area" id="comment-area">
+                    <hr>
+                    <h3>发表你的评论</h3>
+                    <form action="#" method="post" class="comment-form">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="id_name">名字：</label>
+                                <input type="text" id="id_name" name="name" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="id_email">邮箱：</label>
+                                <input type="email" id="id_email" name="email" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="id_url">网址：</label>
+                                <input type="text" id="id_url" name="url">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="id_comment">评论：</label>
+                                <textarea name="comment" id="id_comment" required></textarea>
+                                <button type="submit" class="comment-btn">发表</button>
+                            </div>
+                        </div>    <!-- row -->
+                    </form>
+
+                    <div class="comment-list-panel">
+                        <h3>评论列表，共 <span>4</span> 条评论</h3>
+                        <div class="comment-list">
+
+                            <div class="comment-item">
+                                <span class="nickname">追梦人物</span>
+                                <time class="submit-date" datetime="2012-11-09T23:15:57+00:00">2017年3月12日 14:56</time>
+                                <div class="text">
+                                    文章观点又有道理又符合人性，这才是真正为了表达观点而写，不是为了迎合某某知名人士粉丝而写。我觉得如果琼瑶是前妻，生了三孩子后被一不知名的女人挖了墙角，我不信谁会说那个女人是追求真爱，说同情琼瑶骂小三的女人都是弱者。
+                                </div>
+                                <div class="comment-tool">
+                                    <a class="fa fa-thumbs-up">3赞</a>
+                                    <a class="fa fa-thumbs-down">4踩</a>
+                                    <a class="fa fa-comment">回复</a>
+                                </div>
+
+
+                                <div class="comment-sub">
+                                    <span class="nickname">追梦人物</span>
+                                    <span class="nickname fa fa-reply">fanlion</span>
+                                    <time class="submit-date" datetime="2012-11-09T23:15:57+00:00">2017年3月12日 14:56
+                                    </time>
+                                    <div class="text">
+                                        文章观点又有道理又符合人性，这才是真正为了表达观点而写，不是为了迎合某某知名人士粉丝而写。我觉得如果琼瑶是前妻，生了三孩子后被一不知名的女人挖了墙角，我不信谁会说那个女人是追求真爱，说同情琼瑶骂小三的女人都是弱者。
+                                    </div>
+                                    <div class="comment-tool">
+                                        <a class="fa fa-thumbs-up">3赞</a>
+                                        <a class="fa fa-thumbs-down">4踩</a>
+                                        <a class="fa fa-comment">回复</a>
+                                    </div>
+                                </div>
+
+                                <div class="comment-sub">
+                                    <span class="nickname">追梦人物</span>
+                                    <span class="nickname fa fa-reply">fanlion</span>
+                                    <time class="submit-date" datetime="2012-11-09T23:15:57+00:00">2017年3月12日 14:56
+                                    </time>
+                                    <div class="text">
+                                        文章观点又有道理又符合人性，这才是真正为了表达观点而写，不是为了迎合某某知名人士粉丝而写。我觉得如果琼瑶是前妻，生了三孩子后被一不知名的女人挖了墙角，我不信谁会说那个女人是追求真爱，说同情琼瑶骂小三的女人都是弱者。
+                                    </div>
+                                    <div class="comment-tool">
+                                        <a class="fa fa-thumbs-up">3赞</a>
+                                        <a class="fa fa-thumbs-down">4踩</a>
+                                        <a class="fa fa-comment">回复</a>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="comment-item">
+                                <span class="nickname">zmrenwu</span>
+                                <time class="submit-date" datetime="2012-11-09T23:15:57+00:00">2017年3月11日 23:56</time>
+                                <div class="text">
+                                    本能有可能会冲破格局，但格局有时候也会拘住本能。
+                                    本能有可能会冲破格局，但格局有时候也会拘住本能。
+                                    本能有可能会冲破格局，但格局有时候也会拘住本能。
+                                    本能有可能会冲破格局，但格局有时候也会拘住本能。
+                                    本能有可能会冲破格局，但格局有时候也会拘住本能。
+                                </div>
+                                <div class="comment-tool">
+                                    <a class="fa fa-thumbs-up">3赞</a>
+                                    <a class="fa fa-thumbs-down">4踩</a>
+                                    <a class="fa fa-comment">回复</a>
+                                </div>
+                            </div>
+
+                            <div class="comment-item">
+                                <span class="nickname">蝙蝠侠</span>
+                                <time class="submit-date" datetime="2012-11-09T23:15:57+00:00">2017年3月9日 8:56</time>
+                                <div class="text">
+                                    其实真理一般是属于沉默的大多数的。那些偏激的观点只能吸引那些同样偏激的人。前几年琼瑶告于妈抄袭，大家都表示大快人心，说明吃瓜观众都只是就事论事，并不是对琼瑶有偏见。
+                                </div>
+                                <div class="comment-tool">
+                                    <a class="fa fa-thumbs-up">3赞</a>
+                                    <a class="fa fa-thumbs-down">4踩</a>
+                                    <a class="fa fa-comment">回复</a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </section>
 
             </main>
         </div>
     </div>
 </div>
+
 <footer id="site-footer">
     <div class="container">
         <div class="row">
@@ -196,12 +284,5 @@
 </div>
 
 <script src="{% static 'blog/js/script.js' %}"></script>
-{# 量子背景特效#}
-<script src="{% static 'blog/js/particleground.js' %}"></script>
-<script src="{% static 'blog/js/particle.js' %}"></script>
-<script>
-    new Particleground.particle('#particle');
-</script>
-
 </body>
 </html>

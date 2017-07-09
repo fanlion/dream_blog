@@ -7,7 +7,6 @@
 
     <!-- meta -->
     <meta charset="UTF-8">
-    <link rel="Short Icon" href="{% static 'img/favicon.ico' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- cdn -->
@@ -18,16 +17,24 @@
     <script src="http://cdn.bootcss.com/jquery.form/3.37.0/jquery.form.min.js"></script>
 
     <!-- css -->
-    {#    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">#}
     <link rel="stylesheet" href="{% static 'blog/css/pace.css' %}">
     <link rel="stylesheet" href="{% static 'blog/css/custom.css' %}">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
     <!-- js -->
-    {#    <script src="{% static 'js/jquery-2.1.3.min.js' %}"></script>#}
-    {#    <script src="{% static 'js/bootstrap.min.js' %}"></script>#}
     <script src="{% static 'blog/js/pace.min.js' %}"></script>
     <script src="{% static 'blog/js/modernizr.custom.js' %}"></script>
+
+    {#    <! -- 百度统计 -->#}
+    {#    <script>#}
+    {#        var _hmt = _hmt || [];#}
+    {#        (function () {#}
+    {#            var hm = document.createElement("script");#}
+    {#            hm.src = "https://hm.baidu.com/hm.js?d6df38850a800bda535335a8363bc401";#}
+    {#            var s = document.getElementsByTagName("script")[0];#}
+    {#            s.parentNode.insertBefore(hm, s);#}
+    {#        })();#}
+    {#    </script>#}
 </head>
 
 <body id="page">
@@ -165,41 +172,42 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
+</div>
 
-    <script src="{% static 'blog/js/script.js' %}"></script>
-    <script>
-        function ChangeCode(ths) {
+<script src="{% static 'blog/js/script.js' %}"></script>
+<script>
+    function ChangeCode(ths) {
 
-            var new_url = $('#check_code').attr('src').split('?')[0] + '?' + Math.random();
-            ths.src = new_url;
-        };
+        var new_url = $('#check_code').attr('src').split('?')[0] + '?' + Math.random();
+        ths.src = new_url;
+    };
 
-        $(document).ready(function () {
+    $(document).ready(function () {
 
-            $('#contact').submit(function () {
-                var options = {
-                    type: 'post',
-                    dataType: 'json',
-                    success: afterSubmit
-                };
+        $('#contact').submit(function () {
+            var options = {
+                type: 'post',
+                dataType: 'json',
+                success: afterSubmit
+            };
 
-                function afterSubmit(responseText) {
-                    // 模态框消息
-                    $('#result').text(responseText.result);
-                    // 展示模态框
-                    $('#myModal').modal({
-                        keyboard: true
-                    });
-                    var new_url = $('#check_code').attr('src').split('?')[0] + '?' + Math.random();
-                    $('#check_code').attr('src', new_url);
-                }
+            function afterSubmit(responseText) {
+                // 模态框消息
+                $('#result').text(responseText.result);
+                // 展示模态框
+                $('#myModal').modal({
+                    keyboard: true
+                });
+                var new_url = $('#check_code').attr('src').split('?')[0] + '?' + Math.random();
+                $('#check_code').attr('src', new_url);
+            }
 
-                $(this).ajaxSubmit(options);
-                return false; // 阻止默认表单提交
-            });
-
+            $(this).ajaxSubmit(options);
+            return false; // 阻止默认表单提交
         });
-    </script>
+
+    });
+</script>
 
 </body>
 </html>

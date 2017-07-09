@@ -3,6 +3,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.http import Http404, HttpResponseForbidden, HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404
+from django.views.decorators.cache import cache_page
 
 from blog.forms import ContactForm
 from .models import Post, Category, Tag, About, Contact
@@ -82,6 +83,7 @@ def preview(request, pk):
     return render(request, 'blog/detail.html', {'post': post})  # @cache_page(60 * 30)
 
 
+# @cache_page(60 * 30)
 def archives(request, year, month):
     """
      归档视图，按日期（年，月）对文章进行归档
@@ -165,6 +167,7 @@ def category(request, pk):
     return render(request, 'blog/index.html', pagination_data)
 
 
+# @cache_page(60 * 30)
 def tag(request, pk):
     """
     返回指定标签下的文章视图
@@ -206,7 +209,7 @@ def tag(request, pk):
         return HttpResponseForbidden('Forbidden 403')
 
 
-# @cache_page(60 * 60 * 12)  # 十二小时
+# @cache_page(60 * 60)  # 十二小时
 def about(request):
     """
     关于我页面 视图
@@ -273,7 +276,7 @@ def check_code(request):
     return HttpResponse(stream.getvalue())
 
 
-@login_required
+# @login_required
 def preview_about(request):
     """
     关于我 预览 视图,只允许管理员查看

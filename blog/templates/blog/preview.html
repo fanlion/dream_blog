@@ -36,7 +36,6 @@
 </head>
 
 <body>
-<!-- 量子效果 -->
 <div id="particle" style="height: 150px;"></div>
 <div class="container">
     <header id="site-header">
@@ -96,7 +95,7 @@
                                     class="entry-date"
                                     datetime="{{ post.create_time }}">{{ post.create_time }}</time></a></span>
                             <span class="post-author"><a href="#">{{ post.author }}</a></span>
-{#                            <span class="comments-link"><a href="#">{{ comment_list.count }} 评论</a></span>#}
+                            {#                            <span class="comments-link"><a href="#">{{ comment_list.count }} 评论</a></span>#}
                             <span class="views-count"><a href="#">{{ post.views }} 阅读</a></span>
                         </div>
                     </header>
@@ -106,24 +105,7 @@
                         </p>
                     </div>
                 </article>
-                {% if post %}
-                    <section class="comment-area" id="comment-area">
-                        <hr>
-                        <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
-                        <script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
-                        <script>
-                            var cloudTieConfig = {
-                                url: document.location.href,
-                                sourceId: "",
-                                productKey: "a7081436f6284e8eadab78110909d49d",
-                                target: "cloud-tie-wrapper"
-                            };
-                            var yunManualLoad = true;
-                            Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
-                        </script>
-                    </section>
-                {% endif %}
-
+                {#                这里写评论模块#}
             </main>
         </div>
     </div>
@@ -160,12 +142,6 @@
 </div>
 
 <script src="{% static 'blog/js/script.js' %}"></script>
-{# 量子背景特效#}
-<script src="{% static 'blog/js/particleground.js' %}"></script>
-<script src="{% static 'blog/js/particle.js' %}"></script>
-<script>
-    new Particleground.particle('#particle');
-</script>
 
 </body>
 </html>

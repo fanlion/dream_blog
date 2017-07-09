@@ -839,6 +839,7 @@ img {
  * 12.0 - Comment
  */
 .comment-area {
+    margin: 0 11%;
     padding: 0 30px 0;
 }
 
@@ -875,6 +876,23 @@ img {
 
 .comment-item .nickname:after {
     content: ' ·';
+}
+
+.comment-sub {
+    margin: 14px 0 0 20px;
+    padding-top: 15px;
+    border-top: 1px #ccc solid;
+    clear: both;
+}
+
+.comment-tool {
+    float: right;
+    margin-right: 5%;
+    padding-bottom: 15px;
+}
+
+.comment-tool a {
+    padding-left: 5px;
 }
 
 .comment-item .text {
