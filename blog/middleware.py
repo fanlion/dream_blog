@@ -117,20 +117,11 @@ class BlackListMiddleWare(MiddlewareMixin):
                 return HttpResponseForbidden()
 
 
-class MultipleProxyMiddleware(MiddlewareMixin):
-    FORWARDED_FOR_FIELDS = [
-        'HTTP_X_FORWARDED_FOR',
-        'HTTP_X_FORWARDED_HOST',
-        'HTTP_X_FORWARDED_SERVER',
-    ]
-
+class RealIpMiddleware(MiddlewareMixin):
+    """
+    如果存在代理，则从代理获取真实IP
+    """
     def process_request(self, request):
-        """
-        Rewrites the proxy headers so that only the most
-        recent proxy is used.
-        """
-        for field in self.FORWARDED_FOR_FIELDS:
-            if field in request.META:
-                if ',' in request.META[field]:
-                    parts = request.META[field].split(',')
-                    request.META[field] = parts[-1].strip()
+        if 'HTTP_X_FORWARDED_FOR' in request.META:
+            request.META['REMOTE_ADDR'] = request.META['HTTP_X_FORWARDED_FOR']
+

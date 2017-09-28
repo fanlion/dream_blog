@@ -197,6 +197,7 @@ class BlackList(models.Model):
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     modified_time = models.DateTimeField(null=True, verbose_name='修改时间')
     deny_reason = models.CharField(max_length=20, choices=DENY_REASON_CHOICES, default='1', verbose_name='禁止原因')  # 拒绝原因
+    remarks = models.TextField(null=True, blank=True, verbose_name='备注')  # 备注
 
     class Meta:
         verbose_name = '黑名单'

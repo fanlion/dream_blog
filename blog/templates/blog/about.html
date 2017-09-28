@@ -110,7 +110,7 @@
                 <div class="copyright">
                     <p>网站已经运行：{% get_run_day_count %}天</p>
                     {% get_total_visit_count as total_count %}
-                    <p>总访问量：{{ total_count.total_visit }}次 | 今日访问量：{% get_today_visit_count %}次</p>
+                    <p>总访问量：{{ total_count.total_visit }}次 | 今日访问量：{% get_today_visit_count %}次 | 游客IP：{% get_ip_count %}个</p>
                     <p class="social">
                         <a href="http://github.com/fanlion">
                             <span class="fa fa-github" style="font-size: 20px;"></span>

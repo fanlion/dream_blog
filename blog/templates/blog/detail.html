@@ -95,10 +95,11 @@
                             </span>
 
                             <span class="post-date"><a class="fa fa-calendar"
-                                    href="{% url 'blog:archives' post.create_time.year post.create_time.month %}"><time
+                                                       href="{% url 'blog:archives' post.create_time.year post.create_time.month %}"><time
                                     class="entry-date"
                                     datetime="{{ post.create_time }}">{{ post.create_time }}</time></a></span>
-                            <span class="post-author"><a href="#" class="fa fa-user">{{ post.author.nickname }}</a></span>
+                            <span class="post-author"><a href="#"
+                                                         class="fa fa-user">{{ post.author.nickname }}</a></span>
                             {#                            <span class="comments-link"><a href="#">{{ comment_list.count }} 评论</a></span>#}
                             <span class="views-count"><a href="#" class="fa fa-eye">{{ post.views }} 阅读</a></span>
                         </div>
@@ -134,23 +135,25 @@
                     <h3>发表你的评论</h3>
                     <form action="#" method="post" class="comment-form">
                         <div class="row">
-                            <div class="col-md-4">
-                                <label for="id_name">名字：</label>
-                                <input type="text" id="id_name" name="name" required>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="id_email">邮箱：</label>
-                                <input type="email" id="id_email" name="email" required>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="id_url">网址：</label>
-                                <input type="text" id="id_url" name="url">
-                            </div>
+{#                            <div class="col-md-4">#}
+{#                                <label for="id_name">名字：</label>#}
+{#                                <input type="text" id="id_name" name="name" required>#}
+{#                            </div>#}
+{#                            <div class="col-md-4">#}
+{#                                <label for="id_email">邮箱：</label>#}
+{#                                <input type="email" id="id_email" name="email" required>#}
+{#                            </div>#}
+{#                            <div class="col-md-4">#}
+{#                                <label for="id_url">网址：</label>#}
+{#                                <input type="text" id="id_url" name="url">#}
+{#                            </div>#}
                             <div class="col-md-12">
                                 <label for="id_comment">评论：</label>
                                 <textarea name="comment" id="id_comment" required></textarea>
                                 <button type="submit" class="comment-btn">发表</button>
                             </div>
+                            <input type="hidden" name="pid" value="" id="pid">
+                            <input type="hidden" name="reply_to" value="" id="reply_to">
                         </div>    <!-- row -->
                     </form>
 
@@ -165,9 +168,9 @@
                                     文章观点又有道理又符合人性，这才是真正为了表达观点而写，不是为了迎合某某知名人士粉丝而写。我觉得如果琼瑶是前妻，生了三孩子后被一不知名的女人挖了墙角，我不信谁会说那个女人是追求真爱，说同情琼瑶骂小三的女人都是弱者。
                                 </div>
                                 <div class="comment-tool">
-                                    <a class="fa fa-thumbs-up">3赞</a>
-                                    <a class="fa fa-thumbs-down">4踩</a>
-                                    <a class="fa fa-comment">回复</a>
+                                    <a class="fa fa-thumbs-o-up">3赞</a>
+                                    <a class="fa fa-thumbs-o-down">4踩</a>
+                                    <a class="fa fa-comment-o" href="#id_comment">回复</a>
                                 </div>
 
 
@@ -180,9 +183,9 @@
                                         文章观点又有道理又符合人性，这才是真正为了表达观点而写，不是为了迎合某某知名人士粉丝而写。我觉得如果琼瑶是前妻，生了三孩子后被一不知名的女人挖了墙角，我不信谁会说那个女人是追求真爱，说同情琼瑶骂小三的女人都是弱者。
                                     </div>
                                     <div class="comment-tool">
-                                        <a class="fa fa-thumbs-up">3赞</a>
-                                        <a class="fa fa-thumbs-down">4踩</a>
-                                        <a class="fa fa-comment">回复</a>
+                                        <a class="fa fa-thumbs-o-up">3赞</a>
+                                        <a class="fa fa-thumbs-o-down">4踩</a>
+                                        <a class="fa fa-comment-o" href="#id_comment">回复</a>
                                     </div>
                                 </div>
 
@@ -195,9 +198,9 @@
                                         文章观点又有道理又符合人性，这才是真正为了表达观点而写，不是为了迎合某某知名人士粉丝而写。我觉得如果琼瑶是前妻，生了三孩子后被一不知名的女人挖了墙角，我不信谁会说那个女人是追求真爱，说同情琼瑶骂小三的女人都是弱者。
                                     </div>
                                     <div class="comment-tool">
-                                        <a class="fa fa-thumbs-up">3赞</a>
-                                        <a class="fa fa-thumbs-down">4踩</a>
-                                        <a class="fa fa-comment">回复</a>
+                                        <a class="fa fa-thumbs-o-up">3赞</a>
+                                        <a class="fa fa-thumbs-o-down">4踩</a>
+                                        <a class="fa fa-comment-o" href="#id_comment">回复</a>
                                     </div>
                                 </div>
 
@@ -208,15 +211,11 @@
                                 <time class="submit-date" datetime="2012-11-09T23:15:57+00:00">2017年3月11日 23:56</time>
                                 <div class="text">
                                     本能有可能会冲破格局，但格局有时候也会拘住本能。
-                                    本能有可能会冲破格局，但格局有时候也会拘住本能。
-                                    本能有可能会冲破格局，但格局有时候也会拘住本能。
-                                    本能有可能会冲破格局，但格局有时候也会拘住本能。
-                                    本能有可能会冲破格局，但格局有时候也会拘住本能。
                                 </div>
                                 <div class="comment-tool">
-                                    <a class="fa fa-thumbs-up">3赞</a>
-                                    <a class="fa fa-thumbs-down">4踩</a>
-                                    <a class="fa fa-comment">回复</a>
+                                    <a class="fa fa-thumbs-o-up">3赞</a>
+                                    <a class="fa fa-thumbs-o-down">4踩</a>
+                                    <a class="fa fa-comment-o" href="#id_comment">回复</a>
                                 </div>
                             </div>
 
@@ -227,12 +226,11 @@
                                     其实真理一般是属于沉默的大多数的。那些偏激的观点只能吸引那些同样偏激的人。前几年琼瑶告于妈抄袭，大家都表示大快人心，说明吃瓜观众都只是就事论事，并不是对琼瑶有偏见。
                                 </div>
                                 <div class="comment-tool">
-                                    <a class="fa fa-thumbs-up">3赞</a>
-                                    <a class="fa fa-thumbs-down">4踩</a>
-                                    <a class="fa fa-comment">回复</a>
+                                    <a class="fa fa-thumbs-o-up">3赞</a>
+                                    <a class="fa fa-thumbs-o-down">4踩</a>
+                                    <a class="fa fa-comment-o" href="#id_comment" onclick="">回复</a>
                                 </div>
                             </div>
-
 
                         </div>
                     </div>
@@ -250,7 +248,7 @@
                 <div class="copyright">
                     <p>网站已经运行：{% get_run_day_count %}天</p>
                     {% get_total_visit_count as total_count %}
-                    <p>总访问量：{{ total_count.total_visit }}次 | 今日访问量：{% get_today_visit_count %}次</p>
+                    <p>总访问量：{{ total_count.total_visit }}次 | 今日访问量：{% get_today_visit_count %}次 | 游客IP：{% get_ip_count %}个</p>
                     <p class="social">
                         <a href="http://github.com/fanlion">
                             <span class="fa fa-github fa-github" style="font-size: 20px;"></span>
@@ -284,5 +282,16 @@
 </div>
 
 <script src="{% static 'blog/js/script.js' %}"></script>
+<script>
+
+    $(document).ready(function () {
+        function reply(pid, replay_to) {
+            $('#pid').val(pid);
+            $('#reply_to').val(replay_to);
+
+        }
+
+    });
+</script>
 </body>
 </html>

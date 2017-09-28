@@ -19,6 +19,7 @@ class Comment(models.Model):
     is_pub = models.BooleanField(default=True, verbose_name='是否显示')  # 是否显示
     star = models.PositiveIntegerField(default=0, verbose_name='赞')  # 赞
     un_star = models.PositiveIntegerField(default=0, verbose_name='踩')  # 踩
+    reply_to = models.ManyToManyField('self', verbose_name='回复')  # 回复给
 
     # title = models.CharField(max_length=200, verbose_name='文章标题')
     # post_url = models.URLField(blank=True, verbose_name='文章地址')
