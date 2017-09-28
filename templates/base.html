@@ -35,22 +35,11 @@
     <!-- js -->
     <script src="{% static 'blog/js/pace.min.js' %}"></script>
     <script src="{% static 'blog/js/modernizr.custom.js' %}"></script>
-
-    <! --百度统计 -->
-    {#    <script>#}
-    {#        var _hmt = _hmt || [];#}
-    {#        (function () {#}
-    {#            var hm = document.createElement("script");#}
-    {#            hm.src = "https://hm.baidu.com/hm.js?d6df38850a800bda535335a8363bc401";#}
-    {#            var s = document.getElementsByTagName("script")[0];#}
-    {#            s.parentNode.insertBefore(hm, s);#}
-    {#        })();#}
-    {#    </script>#}
-
 </head>
 
 <body>
-
+<!-- 粒子效果 -->
+<div id="particles-js"></div>
 <div class="container">
     <header id="site-header">
         <div class="row">
@@ -101,12 +90,12 @@
     <div class="container">
         <div class="row">
 
-            <main class="col-md-8">
+            <main class="col-md-9">
                 {# ######################## 主体 #########################}
                 {% block main %}
                 {% endblock main %}
             </main>
-            <aside class="col-md-4">
+            <aside class="col-md-3">
 
                 {########################## 推荐文章 ######################}
                 {% block recommend %}
@@ -184,5 +173,7 @@
 </div>
 
 <script src="{% static 'blog/js/script.js' %}"></script>
+<script src="{% static 'blog/js/particles.min.js' %}"></script>
+<script src="{% static 'blog/js/particles-app.js' %}"></script>
 </body>
 </html>

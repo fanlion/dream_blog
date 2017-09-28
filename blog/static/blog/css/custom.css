@@ -20,9 +20,11 @@
  * 13.0 - Pagination
  */
 
+
 /**
  * 1.0 - Google Font
  */
+
 
 /**
  * 2.0 - General Elements
@@ -49,7 +51,8 @@ a {
     color: #333;
 }
 
-a:hover, a:focus {
+a:hover,
+a:focus {
     text-decoration: none;
     color: #000;
 }
@@ -99,6 +102,7 @@ img {
     margin-bottom: 40px;
 }
 
+
 /**
  * 3.0 - Site Header
  */
@@ -118,6 +122,7 @@ img {
     overflow: hidden;
 }
 
+
 /**
  * 3.1 - Logo
  */
@@ -136,6 +141,7 @@ img {
     font-family: 'Lato', sans-serif;
     font-weight: 300;
 }
+
 
 /**
  * 3.2 - Main Navigation
@@ -174,6 +180,7 @@ img {
     color: #000;
 }
 
+
 /**
  * 3.2.1 - Main Nav CSS 3 Hover Effect
  */
@@ -205,6 +212,7 @@ img {
     max-width: 100%;
 }
 
+
 /**
  * 4.0 - Home/Blog
  */
@@ -234,7 +242,7 @@ img {
 }
 
 .entry-content {
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.9;
     font-weight: 300;
     color: #000;
@@ -247,6 +255,7 @@ img {
     content: ' ·';
     color: #000;
 }
+
 
 /**
  * 4.1 - Read More Button CSS 3 style
@@ -330,6 +339,7 @@ img {
     -moz-transform: rotate(0deg) translateX(50%);
     transform: rotate(0deg) translateX(50%);
 }
+
 
 /**
  * 5.0 - Widget
@@ -450,6 +460,7 @@ img {
     color: #444;
 }
 
+
 /**
  * 6.0 - Footer
  */
@@ -466,6 +477,7 @@ img {
     border-top: 1px solid #eee;
     color: #666;
 }
+
 
 /**
  * 7.0 - Header Search Bar
@@ -525,6 +537,7 @@ img {
     position: relative;
     top: -6px;
 }
+
 
 /**
  * 8.0 - Mobile Menu
@@ -632,6 +645,7 @@ img {
     transform: translateY(25%) rotateX(-35deg);
 }
 
+
 /**
  * 9.0 - Contact Page Social
  */
@@ -677,11 +691,13 @@ img {
     padding: 12px 20px;
 }
 
+
 /**
  * 10.0 - Contact Form
  */
 
-.contact-form input, .comment-form input {
+.contact-form input,
+.comment-form input {
     border: 1px solid #aaa;
     margin-bottom: 15px;
     width: 100%;
@@ -691,7 +707,8 @@ img {
     transition: 0.4s border-color linear;
 }
 
-.contact-form textarea, .comment-form textarea {
+.contact-form textarea,
+.comment-form textarea {
     border: 1px solid #aaa;
     margin-bottom: 15px;
     width: 100%;
@@ -702,8 +719,10 @@ img {
     transition: 0.4s border-color linear;
 }
 
-.contact-form input:focus, .comment-form input:focus,
-.contact-form textarea:focus, .comment-form textarea:focus {
+.contact-form input:focus,
+.comment-form input:focus,
+.contact-form textarea:focus,
+.comment-form textarea:focus {
     border-color: #666;
 }
 
@@ -773,6 +792,7 @@ img {
     left: 0;
 }
 
+
 /**
  * 11.0 - Media Query
  */
@@ -781,7 +801,6 @@ img {
     .main-nav a {
         margin-right: 20px;
     }
-
     #header-search-box {
         position: absolute;
         right: 20px;
@@ -793,15 +812,12 @@ img {
         right: 20px;
         top: 9px;
     }
-
     .main-nav {
         margin-top: 2px;
     }
-
     .btn-5 span {
         display: none;
     }
-
     .btn-5b:before {
         left: 0;
     }
@@ -812,12 +828,10 @@ img {
         margin-top: 8px;
         font-size: 24px;
     }
-
     .post {
         background: #fff;
         padding: 0 10px 0;
     }
-
     .more-link {
         font-size: 0.9em;
         line-height: 100%;
@@ -829,15 +843,16 @@ img {
         height: 70%;
         font-size: 34px;
     }
-
     .overlay ul li {
         min-height: 34px;
     }
 }
 
+
 /**
  * 12.0 - Comment
  */
+
 .comment-area {
     margin: 0 11%;
     padding: 0 30px 0;
@@ -900,9 +915,11 @@ img {
     font-size: 16px;
 }
 
+
 /**
  * 13.0 - Pagination
  */
+
 .pagination-simple {
     padding-left: 30px;
     font-size: 16px;
@@ -920,4 +937,27 @@ img {
 
 .current a {
     color: red;
+}
+
+
+/* 粒子效果 */
+
+canvas {
+    display: block;
+}
+
+
+/* ---- particles.js container ---- */
+
+#particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    background-color: #FFF;
+    background-image: url("");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 50%;
+    z-index: -1;
 }
