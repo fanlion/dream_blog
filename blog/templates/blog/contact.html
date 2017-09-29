@@ -78,18 +78,27 @@
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-md-6 col-md-offset-3">
+                                    <span class="form-require">*</span>
                                     <label for="{{ form.name.id_for_label }}">名字</label>
                                     {{ form.name }}
                                     {{ form.name.errors }}
+
+                                    <span class="form-require">*</span>
                                     <label for="{{ form.email.id_for_label }}">邮箱</label>
                                     {{ form.email }}
                                     {{ form.email.errors }}
+
+                                    <span class="form-require">*</span>
                                     <label for="{{ form.subject.id_for_label }}">留言主题</label>
                                     {{ form.subject }}
                                     {{ form.subject.errors }}
+
+                                    <span class="form-require">*</span>
                                     <label for="{{ form.content.id_for_label }}">留言内容</label>
                                     {{ form.content }}
                                     {{ form.content.errors }}
+
+                                    <span class="form-require">*</span>
                                     <label for="{{ form.check_code.id_for_label }}">验证码</label>
                                     <img id="check_code" src="{% url 'blog:check_code' %}" onclick="ChangeCode(this)">
                                     {{ form.check_code }}

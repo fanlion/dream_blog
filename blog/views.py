@@ -7,6 +7,7 @@ from django.views.decorators.cache import cache_page
 
 from blog.forms import ContactForm
 from .models import Post, Category, Tag, About, Contact
+from comments.models import Comment
 from .utils.page_helper import PaginationBlogPost
 
 PAGE_SIZE = 12  # 每页显示文章的数量
@@ -58,6 +59,7 @@ def detail(request, pk):
     """
     post = get_object_or_404(Post, pk=pk)
     cate = get_object_or_404(Category, post=post)
+    comments = Comment.objects.filter(post=post).filter(is_pub=True)
 
     # 访问量+1
     post.increase_views()
@@ -65,7 +67,7 @@ def detail(request, pk):
     # 如果文章是公开，则显示
     if post.is_pub and cate.is_pub:
         # 获取评论
-        return render(request, 'blog/detail.html', {'post': post})
+        return render(request, 'blog/detail.html', {'post': post, 'comments': comments})
     else:
         raise Http404('访问的页面不存在')
 
