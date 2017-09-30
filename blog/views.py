@@ -267,11 +267,11 @@ def check_code(request):
     :return:
     """
     import io
-    from blog.utils import check_code as CheckCode
+    from blog.utils import check_code
 
     stream = io.BytesIO()
     # img图片对象，code在图像中写的内容
-    img, code = CheckCode.create_validate_code()
+    img, code = check_code.create_validate_code()
     img.save(stream, 'png')
     # 图片页面中显示，验证码存入session
     request.session['CheckCode'] = code

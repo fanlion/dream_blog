@@ -843,7 +843,7 @@ img {
  */
 
 .comment-area {
-    margin: 0 11%;
+    margin: 8% 15%;
     padding: 0 30px 0;
 }
 
@@ -938,6 +938,20 @@ img {
     z-index: -1;
 }
 
+/* ---- 表单验证 ---- */
+
 .form-require {
+    color: red;
+}
+
+.msg {
+    font-size:13px;
+}
+
+.form-success {
+    color: green;
+}
+
+.form-error {
     color: red;
 }
