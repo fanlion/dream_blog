@@ -3,15 +3,11 @@ import logging
 import django.utils.log
 import logging.handlers
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 SECRET_KEY = 'j#c9ugj8d_+d-ysrc8z)54j&61%1v-@+(96hzvpzqu9%+2cku^'
 
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.vanblog.cn']
 
 # Application definition
@@ -42,7 +38,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'blog.middleware.MultipleProxyMiddleware',
+    'blog.middleware.RealIpMiddleware',
     'blog.middleware.VisitStatisticsMiddleWare',
     'blog.middleware.VisitRecordMiddleWare',
     'blog.middleware.BlackListMiddleWare',
@@ -76,8 +72,8 @@ WSGI_APPLICATION = 'dream_blog.wsgi.application'
 #         'HOST': '127.0.0.1',
 #         'PORT': 3306,
 #         'USER': 'root',
-#         'PASSWORD': 'lF4782317wyz',
-#         'NAME': 'vanblog',
+#         'PASSWORD': '123456',
+#         'NAME': 'vanblog'
 #     }
 # }
 

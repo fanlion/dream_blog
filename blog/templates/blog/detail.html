@@ -1,7 +1,7 @@
-{% load staticfiles %}
-{% load blog_tags %}
+{% load staticfiles %} {% load blog_tags %}
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>VanBlog-{{ post.title }}</title>
     <!-- meta -->
@@ -11,6 +11,7 @@
     <!-- cdn -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -22,21 +23,15 @@
     <!-- js -->
     <script src="{% static 'blog/js/pace.min.js' %}"></script>
     <script src="{% static 'blog/js/modernizr.custom.js' %}"></script>
+    <style>
 
-    {#    <! -- 百度统计 -->#}
-    {#    <script>#}
-    {#        var _hmt = _hmt || [];#}
-    {#        (function () {#}
-    {#            var hm = document.createElement("script");#}
-    {#            hm.src = "https://hm.baidu.com/hm.js?d6df38850a800bda535335a8363bc401";#}
-    {#            var s = document.getElementsByTagName("script")[0];#}
-    {#            s.parentNode.insertBefore(hm, s);#}
-    {#        })();#}
-    {#    </script>#}
+    </style>
 
 </head>
 
 <body>
+<!-- 粒子效果 -->
+<div id="particles-js"></div>
 <div class="container">
     <header id="site-header">
         <div class="row">
@@ -44,7 +39,8 @@
                 <div class="logo">
                     <h1><a href="{% url 'blog:index' %}"><b>Van</b>Blog</a></h1>
                 </div>
-            </div><!-- col-md-4 -->
+            </div>
+            <!-- col-md-4 -->
             <div class="col-md-8 col-sm-7 col-xs-4">
                 <nav class="main-nav" role="navigation">
                     <div class="navbar-header">
@@ -59,7 +55,8 @@
                             <li class="cl-effect-11"><a href="{% url 'blog:about' %}" data-hover="关于">关于</a></li>
                             <li class="cl-effect-11"><a href="{% url 'blog:contact' %}" data-hover="留言">留言</a></li>
                         </ul>
-                    </div><!-- /.navbar-collapse -->
+                    </div>
+                    <!-- /.navbar-collapse -->
                 </nav>
                 <div id="header-search-box">
                     <a id="search-menu" href="#"><span id="search-icon"
@@ -71,7 +68,8 @@
                         </form>
                     </div>
                 </div>
-            </div><!-- col-md-8 -->
+            </div>
+            <!-- col-md-8 -->
         </div>
     </header>
 </div>
@@ -88,18 +86,19 @@
                             <a href="{% url 'blog:detail' post.pk %}">{{ post.title }}</a>
                         </h1>
                         <div class="entry-meta">
-                            <span class="post-category">
+                                <span class="post-category">
                                 <a class="fa fa-tag"
                                    href="{% url 'blog:category' post.category.pk %}">{{ post.category.name }}
                                 </a>
                             </span>
 
                             <span class="post-date"><a class="fa fa-calendar"
-                                    href="{% url 'blog:archives' post.create_time.year post.create_time.month %}"><time
+                                                       href="{% url 'blog:archives' post.create_time.year post.create_time.month %}"><time
                                     class="entry-date"
                                     datetime="{{ post.create_time }}">{{ post.create_time }}</time></a></span>
-                            <span class="post-author"><a href="#" class="fa fa-user">{{ post.author.nickname }}</a></span>
-                            {#                            <span class="comments-link"><a href="#">{{ comment_list.count }} 评论</a></span>#}
+                            <span class="post-author"><a href="#"
+                                                         class="fa fa-user">{{ post.author.nickname }}</a></span>
+                            {# <span class="comments-link"><a href="#">{{ comment_list.count }} 评论</a></span>#}
                             <span class="views-count"><a href="#" class="fa fa-eye">{{ post.views }} 阅读</a></span>
                         </div>
                     </header>
@@ -109,135 +108,70 @@
                         </p>
                     </div>
 
-                    <!-- JiaThis Button BEGIN -->
-                    <div class="jiathis_style">
-                        <span class="jiathis_txt">分享到：</span>
-                        <a class="jiathis_button_tools_1"></a>
-                        <a class="jiathis_button_tools_2"></a>
-                        <a class="jiathis_button_tools_3"></a>
-                        <a class="jiathis_button_tools_4"></a>
-                        <a href="http://www.jiathis.com/share?uid=2136200"
-                           class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-                        <a class="jiathis_counter_style"></a>
-                    </div>
-                    <script type="text/javascript">
-                        var jiathis_config = {data_track_clickback: 'true'};
-                    </script>
-                    <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=2136200"
-                            charset="utf-8"></script>
-                    <!-- JiaThis Button END -->
                 </article>
 
                 <!-- 评论 -->
                 <section class="comment-area" id="comment-area">
                     <hr>
                     <h3>发表你的评论</h3>
-                    <form action="#" method="post" class="comment-form">
+                    <form class="comment-form" action="#" method="post">
                         <div class="row">
                             <div class="col-md-4">
+                                <span class="form-require">*</span>
                                 <label for="id_name">名字：</label>
-                                <input type="text" id="id_name" name="name" required>
+                                <input type="text" id="id_name" name="name" placeholder="你的大名" required>
                             </div>
                             <div class="col-md-4">
+                                <span class="form-require">*</span>
                                 <label for="id_email">邮箱：</label>
-                                <input type="email" id="id_email" name="email" required>
+                                <input type="email" id="id_email" name="email" placeholder="你的邮箱(不会公开)" required>
                             </div>
                             <div class="col-md-4">
                                 <label for="id_url">网址：</label>
-                                <input type="text" id="id_url" name="url">
+                                <input type="url" id="id_url" name="url" placeholder="个人主页（没有就算了)">
                             </div>
                             <div class="col-md-12">
+                                <span class="form-require">*</span>
                                 <label for="id_comment">评论：</label>
-                                <textarea name="comment" id="id_comment" required></textarea>
-                                <button type="submit" class="comment-btn">发表</button>
+                                <textarea name="comment" id="id_comment" placeholder="你的伟大评论" required></textarea>
                             </div>
-                        </div>    <!-- row -->
+                            <div class="col-md-12">
+                                <span class="form-require">*</span>
+                                <label for="check_code">验证码: </label>
+                                <img id="check_code" src="{% url 'blog:check_code' %}" onclick="ChangeCode(this)">
+                                <input type="text" id="id_verify_code" name="verify_code" placeholder="验证码(点击验证码可刷新验证码)"
+                                       required>
+                            </div>
+
+                            <div class="col-md-12">
+                                <input id="id_post_id" type="hidden" value="{{ post.pk }}">
+                                <button type="button" class="comment-btn" id="send_comment">发表伟大的评论</button>
+                            </div>
+                        </div>
+                        <!-- row -->
                     </form>
 
                     <div class="comment-list-panel">
-                        <h3>评论列表，共 <span>4</span> 条评论</h3>
+                        <h3>评论列表，共 <span>{{ comments.count }}</span> 条评论</h3>
                         <div class="comment-list">
-
-                            <div class="comment-item">
-                                <span class="nickname">追梦人物</span>
-                                <time class="submit-date" datetime="2012-11-09T23:15:57+00:00">2017年3月12日 14:56</time>
-                                <div class="text">
-                                    文章观点又有道理又符合人性，这才是真正为了表达观点而写，不是为了迎合某某知名人士粉丝而写。我觉得如果琼瑶是前妻，生了三孩子后被一不知名的女人挖了墙角，我不信谁会说那个女人是追求真爱，说同情琼瑶骂小三的女人都是弱者。
-                                </div>
-                                <div class="comment-tool">
-                                    <a class="fa fa-thumbs-up">3赞</a>
-                                    <a class="fa fa-thumbs-down">4踩</a>
-                                    <a class="fa fa-comment">回复</a>
-                                </div>
-
-
-                                <div class="comment-sub">
-                                    <span class="nickname">追梦人物</span>
-                                    <span class="nickname fa fa-reply">fanlion</span>
-                                    <time class="submit-date" datetime="2012-11-09T23:15:57+00:00">2017年3月12日 14:56
-                                    </time>
+                            {% for comment in comments %}
+                                <div class="comment-item">
+                                    <span class="nickname">{{ comment.nick_name }}</span>
+                                    <time class="submit-date">{{ comment.created_time }}</time>
                                     <div class="text">
-                                        文章观点又有道理又符合人性，这才是真正为了表达观点而写，不是为了迎合某某知名人士粉丝而写。我觉得如果琼瑶是前妻，生了三孩子后被一不知名的女人挖了墙角，我不信谁会说那个女人是追求真爱，说同情琼瑶骂小三的女人都是弱者。
+                                        {{ comment.content }}
                                     </div>
-                                    <div class="comment-tool">
-                                        <a class="fa fa-thumbs-up">3赞</a>
-                                        <a class="fa fa-thumbs-down">4踩</a>
-                                        <a class="fa fa-comment">回复</a>
-                                    </div>
+{#                                    <div class="comment-tool">#}
+{#                                        <a class="fa fa-thumbs-o-up">{{ comment.star }}赞</a>#}
+{#                                        <a class="fa fa-thumbs-o-down">{{ comment.un_star }}踩</a>#}
+{#                                    </div>#}
                                 </div>
-
-                                <div class="comment-sub">
-                                    <span class="nickname">追梦人物</span>
-                                    <span class="nickname fa fa-reply">fanlion</span>
-                                    <time class="submit-date" datetime="2012-11-09T23:15:57+00:00">2017年3月12日 14:56
-                                    </time>
-                                    <div class="text">
-                                        文章观点又有道理又符合人性，这才是真正为了表达观点而写，不是为了迎合某某知名人士粉丝而写。我觉得如果琼瑶是前妻，生了三孩子后被一不知名的女人挖了墙角，我不信谁会说那个女人是追求真爱，说同情琼瑶骂小三的女人都是弱者。
-                                    </div>
-                                    <div class="comment-tool">
-                                        <a class="fa fa-thumbs-up">3赞</a>
-                                        <a class="fa fa-thumbs-down">4踩</a>
-                                        <a class="fa fa-comment">回复</a>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="comment-item">
-                                <span class="nickname">zmrenwu</span>
-                                <time class="submit-date" datetime="2012-11-09T23:15:57+00:00">2017年3月11日 23:56</time>
-                                <div class="text">
-                                    本能有可能会冲破格局，但格局有时候也会拘住本能。
-                                    本能有可能会冲破格局，但格局有时候也会拘住本能。
-                                    本能有可能会冲破格局，但格局有时候也会拘住本能。
-                                    本能有可能会冲破格局，但格局有时候也会拘住本能。
-                                    本能有可能会冲破格局，但格局有时候也会拘住本能。
-                                </div>
-                                <div class="comment-tool">
-                                    <a class="fa fa-thumbs-up">3赞</a>
-                                    <a class="fa fa-thumbs-down">4踩</a>
-                                    <a class="fa fa-comment">回复</a>
-                                </div>
-                            </div>
-
-                            <div class="comment-item">
-                                <span class="nickname">蝙蝠侠</span>
-                                <time class="submit-date" datetime="2012-11-09T23:15:57+00:00">2017年3月9日 8:56</time>
-                                <div class="text">
-                                    其实真理一般是属于沉默的大多数的。那些偏激的观点只能吸引那些同样偏激的人。前几年琼瑶告于妈抄袭，大家都表示大快人心，说明吃瓜观众都只是就事论事，并不是对琼瑶有偏见。
-                                </div>
-                                <div class="comment-tool">
-                                    <a class="fa fa-thumbs-up">3赞</a>
-                                    <a class="fa fa-thumbs-down">4踩</a>
-                                    <a class="fa fa-comment">回复</a>
-                                </div>
-                            </div>
-
-
+                            {% empty %}
+                                <span>暂无评论</span>
+                            {% endfor %}
                         </div>
                     </div>
                 </section>
-
             </main>
         </div>
     </div>
@@ -250,7 +184,8 @@
                 <div class="copyright">
                     <p>网站已经运行：{% get_run_day_count %}天</p>
                     {% get_total_visit_count as total_count %}
-                    <p>总访问量：{{ total_count.total_visit }}次 | 今日访问量：{% get_today_visit_count %}次</p>
+                    <p>总访问量：{{ total_count.total_visit }}次 | 今日访问量：{% get_today_visit_count %}次 |
+                        游客IP：{% get_ip_count %}个</p>
                     <p class="social">
                         <a href="http://github.com/fanlion">
                             <span class="fa fa-github fa-github" style="font-size: 20px;"></span>
@@ -284,5 +219,62 @@
 </div>
 
 <script src="{% static 'blog/js/script.js' %}"></script>
+<script src="{% static 'blog/js/particles.min.js' %}"></script>
+<script src="{% static 'blog/js/particles-app.js' %}"></script>
+<script src="{% static 'blog/js/detail.js' %}"></script>
+<script src="https://cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // 评论表单提交
+    $('#send_comment').click(function () {
+        var nick_name = $('#id_name').val().trim();
+        var email = $('#id_email').val().trim();
+        var home_url = $('#id_url').val().trim();
+        var content = $('#id_comment').val().trim();
+        var verify_code = $('#id_verify_code').val().trim();
+        var post_id = $('#id_post_id').val().trim();
+        //trigger 事件执行完后，浏览器会为submit按钮获得焦点
+        $("form .required:input").trigger("blur");
+
+        var numError = $(".form-error").length;
+        if(numError){
+            return false;
+        }
+
+        $.ajax({
+            url: '{% url "comments:comment" %}',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                "nick_name": nick_name,
+                "email": email,
+                "home_url": home_url,
+                "verify_code": verify_code,
+                "content": content,
+                "post_id": post_id
+            },
+            success: function (data) {
+                swal({
+                    title: "消息",
+                    text: data.result,
+                    type: "success"
+                }, function () {
+                    window.location.reload();
+                });
+            },
+            error: function () {
+                swal({
+                    title: "异常",
+                    text: "未能发表伟大评论",
+                    type: "error"
+                }, function () {
+                    window.location.reload();
+                });
+            }
+        });
+    });
+    })
+</script>
 </body>
+
 </html>

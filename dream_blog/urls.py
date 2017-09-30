@@ -20,7 +20,7 @@ from blog.feeds import AllPostRssFeed
 
 urlpatterns = [
     url(r'', include('blog.urls', namespace='blog')),
-    url(r'^comments/', include('comments.urls', namespace='comments')),  # 暂时注释掉评论模块
+    url(r'^comments/', include('comments.urls', namespace='comments')),
     url(r'^user/', include('users.urls', namespace='users')),
     url(r'^xadmin/', xadmin.site.urls),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
