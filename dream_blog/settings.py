@@ -7,7 +7,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'j#c9ugj8d_+d-ysrc8z)54j&61%1v-@+(96hzvpzqu9%+2cku^'
 
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.vanblog.cn']
 
 # Application definition
@@ -66,27 +66,27 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'dream_blog.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': '127.0.0.1',
-        'PORT': 3306,
-        'USER': 'root',
-        'PASSWORD': '123456',
-        'NAME': 'vanblog'
-    }
-}
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
 #         'HOST': '127.0.0.1',
 #         'PORT': 3306,
 #         'USER': 'root',
-#         'PASSWORD': 'lF4782317wyz',
-#         'NAME': 'dream_blog_django',
+#         'PASSWORD': '123456',
+#         'NAME': 'vanblog'
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': '127.0.0.1',
+        'PORT': 3306,
+        'USER': 'root',
+        'PASSWORD': 'lF4782317wyz',
+        'NAME': 'dream_blog_django',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
