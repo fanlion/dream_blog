@@ -4,4 +4,5 @@
 
 ## 项目说明
 
-* 1.实例地址VanBlog[传送门](http://vanblog.cn)
+* 1.实例地址VanBlog[传送门](http://www.vanblog.cn)。
+* 2.文档暂无。
