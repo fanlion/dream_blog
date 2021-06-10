@@ -1,7 +1,7 @@
 appdirs==1.4.3
 certifi==2017.4.17
 chardet==3.0.3
-Django==1.10.6
+Django==2.2.24
 django-ckeditor==5.2.2
 django-crispy-forms==1.6.1
 django-formtools==2.0
